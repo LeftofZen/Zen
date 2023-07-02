@@ -32,8 +32,9 @@ jobs:
     steps:
      - name: Checkout Tag
        run: |
-         echo $GITHUB_REF
-         git checkout $GITHUB_REF
+         # echo $GITHUB_REF
+         # git checkout $GITHUB_REF
+         git checkout v1.0.0
       # GITHUB_REF is the full name, eg 'refs/tags/v1.0.0'       
    
      - name: Restore NuGet Packages
