@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Benjamin Sutas</Authors>
+    <RepositoryUrl>https://github.com/LeftofZen/Zen</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
