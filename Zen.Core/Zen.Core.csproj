@@ -1,4 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Target Name="SetVersion" BeforeTargets="BeforeBuild">
+    <ReadLinesFromFile File="$(SolutionDir)\VERSION.txt">
+      <Output TaskParameter="Lines" PropertyName="VersionNumber" />
+    </ReadLinesFromFile>
+    <PropertyGroup>
+      <AssemblyVersion>$(VersionNumber)</AssemblyVersion>
+      <FileVersion>$(VersionNumber)</FileVersion>
+      <PackageVersion>$(VersionNumber)</PackageVersion>
+    </PropertyGroup>
+  </Target>
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -11,6 +22,9 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Benjamin Sutas</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AssemblyVersion>$(VersionNumber)</AssemblyVersion>
+    <FileVersion>$(VersionNumber)</FileVersion>
+    <PackageVersion>$(VersionNumber)</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
