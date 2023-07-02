@@ -1,6 +1,6 @@
 ﻿namespace Zen.Colour
 {
-	public static class ColourRGBEqualiser
+	public static class ColourEqualiser
 	{
 		public static IEnumerable<ColourRGB> Equalise(IEnumerable<ColourRGB> colours)
 		{

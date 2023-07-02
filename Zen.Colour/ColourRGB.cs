@@ -2,12 +2,8 @@
 
 namespace Zen.Colour
 {
-	public record ColourRGB : IVector3<int>
+	public record struct ColourRGB(int R, int G, int B) : IVector3<int>
 	{
-		public int R { get; set; }
-		public int G { get; set; }
-		public int B { get; set; }
-
 		// IVector3
 		public int X { get => R; set => R = value; }
 		public int Y { get => G; set => G = value; }

@@ -3,7 +3,7 @@ using Zen.Linq;
 
 namespace Zen.Colour
 {
-	public static class ColourRGBGenerator
+	public static class ColourGenerator
 	{
 		public static HashSet<ColourRGB> GenerateColours_RGB_All()
 			=> GenerateColours_RGB_Uniform((int)Math.Pow(2, 24));

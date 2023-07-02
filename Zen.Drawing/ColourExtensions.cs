@@ -3,7 +3,7 @@ using Zen.Colour;
 
 namespace Zen.System.Drawing
 {
-	public static class ColourRGBExtensions
+	public static class ColourExtensions
 	{
 		public static ColourRGB ToColourRGB(this Color c)
 			=> new() { R = (int)(c.R / 255f), G = (int)(c.G / 255f), B = (int)(c.B / 255f) };

@@ -1,6 +1,6 @@
 ﻿namespace Zen.Colour
 {
-	public static class ColourRGBHelpers
+	public static class ColourHelpers
 	{
 		public static ColourRGB AverageRGB(IEnumerable<ColourRGB> ColourRGBs)
 		{

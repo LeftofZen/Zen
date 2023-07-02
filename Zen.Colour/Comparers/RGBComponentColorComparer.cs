@@ -23,5 +23,4 @@
 			+ (gMult * a.G.CompareTo(b.G))
 			+ (bMult * a.B.CompareTo(b.B));
 	}
-
 }
