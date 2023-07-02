@@ -4,6 +4,16 @@ on:
     tags:
       - '*'
   workflow_dispatch: {}
+  
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  NuGetDirectory: ${{ github.workspace }}/nuget
+  
+defaults:
+  run:
+    shell: pwsh
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,11 +33,12 @@ jobs:
     - name: Build and Publish NuGet Packages
       run: |
         dotnet build --configuration Release
-        dotnet pack --configuration Release --output ./nupkg /p:VersionSuffix=$GITHUB_REF_NAME
+        dotnet pack --configuration Release --output ${{ env.NuGetDirectory }} /p:VersionSuffix=$GITHUB_REF_NAME
       # GITHUB_REF_NAME is the tag name
 
-    - name: Deploy NuGet Packages
-      uses: nuget/nuget-push@v2
-      with:
-        nuget-api-key: ${{ secrets.NUGET_API_KEY }}
-        source: './nupkg/*.nupkg'
+    - name: Publish NuGet package
+      run: |
+          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg))
+          {
+              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          }
