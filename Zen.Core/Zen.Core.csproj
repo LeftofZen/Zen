@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Target Name="SetVersion" BeforeTargets="BeforeBuild">
-    <ReadLinesFromFile File="$(SolutionDir)\VERSION.txt">
+    <ReadLinesFromFile File="..\VERSION.txt">
       <Output TaskParameter="Lines" PropertyName="VersionNumber" />
     </ReadLinesFromFile>
     <PropertyGroup>
