@@ -25,7 +25,7 @@ foreach ($projectDirectory in $projectDirectories) {
 # Loop through each project directory and pack the project into a NuGet package
 foreach ($projectDirectory in $projectDirectories) {
     Write-Host "Packing project in directory: $projectDirectory"
-    dotnet pack "$projectDirectory" --configuration Release --output "$projectDirectory\bin\Release"
+    dotnet pack "$projectDirectory" -p:PackageVersion=$(<VERSION.txt) --configuration Release --output "$projectDirectory\bin\Release"
 }
 
 # Loop through each project directory and push the generated NuGet packages

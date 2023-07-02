@@ -8,11 +8,12 @@
       <AssemblyVersion>$(VersionNumber)</AssemblyVersion>
       <FileVersion>$(VersionNumber)</FileVersion>
       <PackageVersion>$(VersionNumber)</PackageVersion>
+      <Version>$(VersionNumber)</Version>
     </PropertyGroup>
   </Target>
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -22,9 +23,6 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Benjamin Sutas</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <AssemblyVersion>$(VersionNumber)</AssemblyVersion>
-    <FileVersion>$(VersionNumber)</FileVersion>
-    <PackageVersion>$(VersionNumber)</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

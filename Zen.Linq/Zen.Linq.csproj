@@ -8,6 +8,7 @@
       <AssemblyVersion>$(VersionNumber)</AssemblyVersion>
       <FileVersion>$(VersionNumber)</FileVersion>
       <PackageVersion>$(VersionNumber)</PackageVersion>
+      <Version>$(VersionNumber)</Version>
     </PropertyGroup>
   </Target>
 
@@ -22,9 +23,6 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Benjamin Sutas</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <AssemblyVersion>$(VersionNumber)</AssemblyVersion>
-    <FileVersion>$(VersionNumber)</FileVersion>
-    <PackageVersion>$(VersionNumber)</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
