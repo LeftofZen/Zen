@@ -4,7 +4,7 @@ using Zenith.Maths.Vectors;
 
 namespace Zenith.Maths
 {
-    public static class MathsHelpers
+	public static class MathsHelpers
 	{
 		public static class Distance
 		{

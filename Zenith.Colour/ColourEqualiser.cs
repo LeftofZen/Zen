@@ -4,14 +4,14 @@
 	{
 		public static IEnumerable<ColourRGB> Equalise(IEnumerable<ColourRGB> colours)
 		{
-			var minR = int.MaxValue;
-			var maxR = int.MinValue;
+			var minR = float.MaxValue;
+			var maxR = float.MinValue;
 
-			var minG = int.MaxValue;
-			var maxG = int.MinValue;
+			var minG = float.MaxValue;
+			var maxG = float.MinValue;
 
-			var minB = int.MaxValue;
-			var maxB = int.MinValue;
+			var minB = float.MaxValue;
+			var maxB = float.MinValue;
 
 			foreach (var c in colours)
 			{
@@ -30,9 +30,9 @@
 
 			foreach (var c in colours)
 			{
-				var r = (c.R - minR) * diffR;
-				var g = (c.G - minG) * diffG;
-				var b = (c.B - minB) * diffB;
+				var r = (c.R - minR) * diffR * 255;
+				var g = (c.G - minG) * diffG * 255;
+				var b = (c.B - minB) * diffB * 255;
 				yield return new ColourRGB() { R = (int)r, G = (int)g, B = (int)b };
 			}
 		}

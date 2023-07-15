@@ -122,7 +122,6 @@ namespace Zenith.Drawing
 		private void Save(Image i, string path)
 		{
 			Console.WriteLine("Saving");
-			//i.Save(@"C:\Users\Benjamin.Sutas\source\repos\all-rgb\all-rgb\content\img.png", ImageFormat.Png);
 			var filename = @$"{path}\img_{DateTime.Now.ToString().Replace(':', '-')}_{Width}x{Height}.png";
 			filename = filename.Replace(' ', '_');
 			i.Save(filename, ImageFormat.Png);

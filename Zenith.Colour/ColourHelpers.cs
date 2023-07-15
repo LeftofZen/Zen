@@ -4,9 +4,9 @@
 	{
 		public static ColourRGB AverageRGB(IEnumerable<ColourRGB> ColourRGBs)
 		{
-			var r = 0;
-			var g = 0;
-			var b = 0;
+			var r = 0f;
+			var g = 0f;
+			var b = 0f;
 
 			foreach (var c in ColourRGBs)
 			{
@@ -15,9 +15,10 @@
 				b += c.B;
 			}
 
-			r /= ColourRGBs.Count();
-			g /= ColourRGBs.Count();
-			b /= ColourRGBs.Count();
+			var count = ColourRGBs.Count();
+			r /= count;
+			g /= count;
+			b /= count;
 
 			return new() { R = r, G = g, B = b };
 		}

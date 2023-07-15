@@ -68,7 +68,7 @@ namespace Zenith.Colour
 			return setOfAllColourRGBs;
 		}
 
-		public static HashSet<ColourRGB> GenerateColourRGBs_HSB_Random(int pixelCount)
+		public static HashSet<ColourRGB> GenerateColours_HSB_Random(int pixelCount)
 		{
 			Console.WriteLine("Generating ColourRGBs");
 
@@ -98,7 +98,7 @@ namespace Zenith.Colour
 			return setOfAllColourRGBs;
 		}
 
-		public static HashSet<ColourRGB> GenerateColourRGBs_RGB_Pastel(int pixelCount)
+		public static HashSet<ColourRGB> GenerateColours_RGB_Pastel(int pixelCount)
 		{
 			var baseline = GenerateColours_RGB_All().ToList();
 			baseline.Shuffle();

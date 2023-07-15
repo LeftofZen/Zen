@@ -118,7 +118,7 @@
 				}
 			}
 
-			return new ColourRGB { R = (int)r, G = (int)g, B = (int)b };
+			return new ColourRGB { R = (float)r, G = (float)g, B = (float)b };
 		}
 	}
 }
