@@ -18,8 +18,8 @@ $projectDirectories = Get-ChildItem -Path $solutionDirectory -Filter "*.csproj" 
 # Loop through each project directory and build the project
 foreach ($projectDirectory in $projectDirectories) {
     Write-Host "Building project in directory: $projectDirectory"
-    dotnet restore "$projectDirectory"
-    dotnet build "$projectDirectory" --configuration Release
+    #dotnet restore "$projectDirectory"
+    #dotnet build "$projectDirectory" --configuration Release
 }
 
 $versionFilePath = Join-Path -Path $solutionDirectory -ChildPath 'VERSION.txt'
@@ -29,12 +29,12 @@ Write-Host $version
 # Loop through each project directory and pack the project into a NuGet package
 foreach ($projectDirectory in $projectDirectories) {
     Write-Host "Packing project in directory: $projectDirectory"
-    dotnet pack "$projectDirectory" -p:PackageVersion=$version --configuration Release --output "$projectDirectory\bin\Release"
+    #dotnet pack "$projectDirectory" -p:PackageVersion=$version --configuration Release --output "$projectDirectory\bin\Release"
 }
 
 # Loop through each project directory and push the generated NuGet packages
 foreach ($projectDirectory in $projectDirectories) {
     $packagePath = Join-Path $projectDirectory "bin\Release\*.$version.nupkg"
-    Write-Host "Pushing NuGet package: $packagePath"
+    Write-Host "Pushing NuGet package: $packagePath to $packageSource with key $apiKey"
     dotnet nuget push $packagePath --source $packageSource --api-key $apiKey
 }

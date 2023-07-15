@@ -48,15 +48,15 @@ namespace Zenith.Drawing
 		public bool Contains(int X, int Y)
 			=> X >= 0 && X < Width && Y >= 0 && Y < Height;
 
-		public bool Contains(Point p)
+		public bool Contains(Point2 p)
 			=> Contains(p.X, p.Y);
 
-		public ColourRGB GetPixel(Point p)
+		public ColourRGB GetPixel(Point2 p)
 			=> GetPixel(p.X, p.Y);
 		public ColourRGB GetPixel(int X, int Y)
 			=> buf[Y, X];
 
-		public void SetPixel(Point p, ColourRGB c)
+		public void SetPixel(Point2 p, ColourRGB c)
 			=> SetPixel(p.X, p.Y, c);
 
 		public void SetPixel(int X, int Y, ColourRGB c)
@@ -65,7 +65,7 @@ namespace Zenith.Drawing
 			buf[Y, X] = c;
 		}
 
-		public bool IsEmpty(Point p)
+		public bool IsEmpty(Point2 p)
 			=> IsEmpty(p.X, p.Y);
 
 		public bool IsEmpty(int X, int Y)
@@ -116,72 +116,16 @@ namespace Zenith.Drawing
 			return img;
 		}
 
-		public void Save()
-			=> Save(GetImage());
+		public void Save(string path)
+			=> Save(GetImage(), path);
 
-		private void Save(Image i)
+		private void Save(Image i, string path)
 		{
 			Console.WriteLine("Saving");
 			//i.Save(@"C:\Users\Benjamin.Sutas\source\repos\all-rgb\all-rgb\content\img.png", ImageFormat.Png);
-			var filename = @$"{BaseFileName}\img_{DateTime.Now.ToString().Replace(':', '-')}_{Width}x{Height}.png";
+			var filename = @$"{path}\img_{DateTime.Now.ToString().Replace(':', '-')}_{Width}x{Height}.png";
 			filename = filename.Replace(' ', '_');
 			i.Save(filename, ImageFormat.Png);
-		}
-
-		public const string BaseFileName = @"C:\Users\bigba\source\repos\all-rgb\all-rgb\content";
-	}
-
-	public static class ImageBufferExtensions
-	{
-		public static IEnumerable<Point> GetNeighbourPoints(this ImageBuffer buf, Point p)
-		{
-			for (var x = -1; x < 2; ++x)
-			{
-				for (var y = -1; y < 2; ++y)
-				{
-					if (x != 0 || y != 0)
-					{
-						if (p.X + x >= 0 && p.X + x < buf.Width && p.Y + y >= 0 && p.Y + y < buf.Height)
-						{
-							yield return new Point(p.X + x, p.Y + y);
-						}
-					}
-				}
-			}
-		}
-
-		public static IEnumerable<ColourRGB> GetNonEmptyNeighbourColours(this ImageBuffer buf, Point p)
-		{
-			for (var x = -1; x < 2; ++x)
-			{
-				for (var y = -1; y < 2; ++y)
-				{
-					if (p.X + x >= 0 && p.X + x < buf.Width && p.Y + y >= 0 && p.Y + y < buf.Height)
-					{
-						if (buf.IsEmpty(p.X + x, p.Y + y))
-						{
-							yield return buf.GetPixel(p.X + x, p.Y + y);
-						}
-					}
-				}
-			}
-		}
-
-		public static IEnumerable<Point> GetNonEmptyNeighbourPoints(this ImageBuffer buf, Point p)
-		{
-			for (var x = -1; x < 2; ++x)
-			{
-				for (var y = -1; y < 2; ++y)
-				{
-					if (p.X + x >= 0 && p.X + x < buf.Width && p.Y + y >= 0 && p.Y + y < buf.Height)
-					{
-						if (buf.IsEmpty(p.X + x, p.Y + y))
-						{
-							yield return new Point(p.X + x, p.Y + y);
-						}
-					}
-				}
-			}
 		}
 	}
 }
