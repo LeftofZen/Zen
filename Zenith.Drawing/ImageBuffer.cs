@@ -3,17 +3,18 @@ using Zenith.Colour;
 using System.Drawing.Imaging;
 using Zenith.Maths;
 using Zenith.Maths.Points;
-using Zenith.System.Drawing;
 using Zenith.Core;
 
-namespace Zenith.Drawing
+namespace Zenith.System.Drawing
 {
 	public class ImageBuffer
 	{
 		private ColourRGB[,] buf;
 		private bool[,] isSet;
 
+#pragma warning disable CS8618 // Bogus error - Clear() method sets buf and isSet
 		public ImageBuffer(int width, int height)
+#pragma warning restore CS8618 // Bogus error - Clear() method sets buf and isSet
 		{
 			Clear(width, height);
 			Radius = MathsHelpers.Distance.Euclidean(Point2.Zero, Middle);
@@ -70,7 +71,7 @@ namespace Zenith.Drawing
 			=> IsEmpty(p.X, p.Y);
 
 		public bool IsEmpty(int X, int Y)
-			=> isSet[Y, X];
+			=> !isSet[Y, X];
 
 		public void Fill(ColourRGB fillColour)
 			=> buf.Fill(fillColour);
