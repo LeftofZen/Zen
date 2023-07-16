@@ -13,10 +13,21 @@ Write-Host "Nuget API key: $apiKey"
 $packageSource = "https://api.nuget.org/v3/index.json"
 
 # Get all the project directories within the solution directory
-$projectDirectories = Get-ChildItem -Path $solutionDirectory -Filter "*.csproj" -Recurse | Select-Object -ExpandProperty DirectoryName
+$projectDirectories = Get-ChildItem -Path $solutionDirectory -Filter "*.csproj" -Recurse | Where-Object { $_.DirectoryName -notlike "*Testing*" } | Select-Object -ExpandProperty DirectoryName
+
+# Delete bin folders
+foreach ($projectDirectory in $projectDirectories)
+{
+    $binDirectories = Get-ChildItem -Path $projectDirectory -Filter "bin" -Directory
+    foreach ($binDirectory in $binDirectories)
+    {
+        Remove-Item -Path $binDirectory.FullName -Recurse -Force
+    }
+}
 
 # Loop through each project directory and build the project
-foreach ($projectDirectory in $projectDirectories) {
+foreach ($projectDirectory in $projectDirectories)
+{
     Write-Host "Building project in directory: $projectDirectory"
     dotnet restore "$projectDirectory"
     dotnet build "$projectDirectory" --configuration Release
@@ -27,14 +38,16 @@ $version = (Get-Content -Path $versionFilePath -Raw).Trim()
 Write-Host $version
 
 # Loop through each project directory and pack the project into a NuGet package
-foreach ($projectDirectory in $projectDirectories) {
+foreach ($projectDirectory in $projectDirectories)
+{
     Write-Host "Packing project in directory: $projectDirectory"
-    dotnet pack "$projectDirectory" -p:PackageVersion=$version --configuration Release --output "$projectDirectory\bin\Release"
+    dotnet pack "$projectDirectory" -p:PackageVersion=$version --configuration Release --output "$projectDirectory\bin\Release" --no-build
 }
 
 # Loop through each project directory and push the generated NuGet packages
-foreach ($projectDirectory in $projectDirectories) {
+foreach ($projectDirectory in $projectDirectories)
+{
     $packagePath = Join-Path $projectDirectory "bin\Release\*.$version.nupkg"
     Write-Host "Pushing NuGet package: $packagePath to $packageSource with key $apiKey"
-    dotnet nuget push $packagePath --source $packageSource --api-key $apiKey
+    # dotnet nuget push $packagePath --source $packageSource --api-key $apiKey
 }
