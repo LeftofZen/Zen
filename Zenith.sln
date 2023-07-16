@@ -20,11 +20,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.System.Drawing", "Ze
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Maths", "Zenith.Maths\Zenith.Maths.csproj", "{68E98E0F-67A0-46E3-90F0-39C7951B6E48}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Verify", "Zenith.Verify\Zenith.Verify.csproj", "{0BF6CF33-6FD2-48E0-88B3-A868BF00DA11}"
-	ProjectSection(ProjectDependencies) = postProject
-		{472D9E9F-24A2-4070-BFF6-D039B5F042F8} = {472D9E9F-24A2-4070-BFF6-D039B5F042F8}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Debug", "Zenith.Debug\Zenith.Debug.csproj", "{472D9E9F-24A2-4070-BFF6-D039B5F042F8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Messaging", "Zenith.Messaging\Zenith.Messaging.csproj", "{EA7F3F5A-AD44-4B35-A2B3-DF49424D4771}"
@@ -62,10 +57,6 @@ Global
 		{68E98E0F-67A0-46E3-90F0-39C7951B6E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68E98E0F-67A0-46E3-90F0-39C7951B6E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68E98E0F-67A0-46E3-90F0-39C7951B6E48}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0BF6CF33-6FD2-48E0-88B3-A868BF00DA11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BF6CF33-6FD2-48E0-88B3-A868BF00DA11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BF6CF33-6FD2-48E0-88B3-A868BF00DA11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BF6CF33-6FD2-48E0-88B3-A868BF00DA11}.Release|Any CPU.Build.0 = Release|Any CPU
 		{472D9E9F-24A2-4070-BFF6-D039B5F042F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{472D9E9F-24A2-4070-BFF6-D039B5F042F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{472D9E9F-24A2-4070-BFF6-D039B5F042F8}.Release|Any CPU.ActiveCfg = Release|Any CPU

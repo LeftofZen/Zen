@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
+using Zenith.Colour;
 
-namespace Zenith.Colour.Testing
+namespace Zenith.Testing.Colour
 {
 	[TestFixture]
 	public class ColourSpaceConverterTests

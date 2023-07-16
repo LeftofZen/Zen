@@ -1,9 +1,13 @@
-﻿namespace Zenith.Colour
+﻿using Zenith.Core;
+
+namespace Zenith.Colour
 {
 	public static class ColourSpaceConverter
 	{
 		public static ColourHSB RGBtoHSB(ColourRGB rgb)
 		{
+			Verify.AreNotEqual(rgb, ColourRGB.None);
+
 			double delta, min;
 			double h = 0, s, b;
 

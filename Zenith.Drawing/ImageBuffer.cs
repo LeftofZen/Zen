@@ -10,12 +10,11 @@ namespace Zenith.Drawing
 {
 	public class ImageBuffer
 	{
+		private ColourRGB[,] buf;
+
 		public ImageBuffer(int width, int height)
 		{
-			buf = new ColourRGB[height, width];
-			buf.Fill(ColourRGB.None);
-
-			isSet = new bool[height, width];
+			Clear(width, height);
 			Radius = MathsHelpers.Distance.Euclidean(Point2.Zero, Middle);
 		}
 
@@ -35,14 +34,13 @@ namespace Zenith.Drawing
 
 			img.UnlockBits(imgData);
 		}
-
-		private ColourRGB[,] buf;
-		private bool[,] isSet;
-
 		public void Clear()
+			=> Clear(Width, Height);
+
+		private void Clear(int width, int height)
 		{
-			buf = new ColourRGB[Height, Width];
-			isSet = new bool[Height, Width];
+			buf = new ColourRGB[height, width];
+			Fill(ColourRGB.None);
 		}
 
 		public bool Contains(int X, int Y)
@@ -53,6 +51,7 @@ namespace Zenith.Drawing
 
 		public ColourRGB GetPixel(Point2 p)
 			=> GetPixel(p.X, p.Y);
+
 		public ColourRGB GetPixel(int X, int Y)
 			=> buf[Y, X];
 
@@ -60,17 +59,16 @@ namespace Zenith.Drawing
 			=> SetPixel(p.X, p.Y, c);
 
 		public void SetPixel(int X, int Y, ColourRGB c)
-		{
-			isSet[Y, X] = true;
-			buf[Y, X] = c;
-		}
+			=> buf[Y, X] = c;
 
 		public bool IsEmpty(Point2 p)
 			=> IsEmpty(p.X, p.Y);
 
 		public bool IsEmpty(int X, int Y)
-			//=> !isSet[Y, X];
 			=> buf[Y, X] == ColourRGB.None;
+
+		public void Fill(ColourRGB fillColour)
+			=> buf.Fill(fillColour);
 
 		public void FillRect(int X, int Y, int Width, int Height, ColourRGB c)
 		{
@@ -108,7 +106,7 @@ namespace Zenith.Drawing
 			{
 				for (var x = 0; x < Width; ++x)
 				{
-					imgData.SetPixel(x, y, isSet[y, x] ? GetPixel(x, y) : Color.White.ToColourRGB());
+					imgData.SetPixel(x, y, !IsEmpty(x, y) ? GetPixel(x, y) : Color.White.ToColourRGB());
 				}
 			}
 

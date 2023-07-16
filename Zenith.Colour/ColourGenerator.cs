@@ -68,34 +68,34 @@ namespace Zenith.Colour
 			return setOfAllColourRGBs;
 		}
 
-		public static HashSet<ColourRGB> GenerateColours_HSB_Random(int pixelCount)
+		public static HashSet<ColourHSB> GenerateColours_HSB_Random(int pixelCount)
 		{
 			Console.WriteLine("Generating ColourRGBs");
 
 			if (pixelCount == 0)
 			{
 				Console.WriteLine("no pixels");
-				return new HashSet<ColourRGB>();
+				return new HashSet<ColourHSB>();
 			}
 
-			var setOfAllColourRGBs = new HashSet<ColourRGB>(pixelCount);
+			var setOfAllColours = new HashSet<ColourHSB>(pixelCount);
 			var rnd = new Random(1);
 
-			while (setOfAllColourRGBs.Count < pixelCount)
+			while (setOfAllColours.Count < pixelCount)
 			{
 				var hsb = new ColourHSB()
 				{
-					Hue = (float)(rnd.NextDouble() * 360),
+					Hue = (float)rnd.NextDouble(),
 					Saturation = (float)rnd.NextDouble(),
 					Brightness = (float)rnd.NextDouble(),
 				};
 
-				_ = setOfAllColourRGBs.Add(hsb.AsRGB());
+				_ = setOfAllColours.Add(hsb);
 			}
 
-			Trace.Assert(setOfAllColourRGBs.Count == pixelCount);
+			Trace.Assert(setOfAllColours.Count == pixelCount);
 
-			return setOfAllColourRGBs;
+			return setOfAllColours;
 		}
 
 		public static HashSet<ColourRGB> GenerateColours_RGB_Pastel(int pixelCount)

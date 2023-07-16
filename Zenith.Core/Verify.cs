@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
-using Zenith.Debug;
 
-namespace Zenith.Verify
+namespace Zenith.Core
 {
 	// Until this proposal is merged, we have to manually add them
 	// https://github.com/dotnet/runtime/issues/20604
@@ -13,6 +12,15 @@ namespace Zenith.Verify
 			if (!left.Equals(right))
 			{
 				throw new ArgumentOutOfRangeException(leftName, $"{left} ({leftName}) was not equal to {right} ({rightName}). Message=\"{message}\"");
+			}
+		}
+
+		public static void AreNotEqual<T>(T left, T right, [CallerArgumentExpression(nameof(left))] string? leftName = null, [CallerArgumentExpression(nameof(right))] string? rightName = null, string? message = null)
+			where T : IEquatable<T>
+		{
+			if (left.Equals(right))
+			{
+				throw new ArgumentOutOfRangeException(leftName, $"{left} ({leftName}) was equal to {right} ({rightName}). Message=\"{message}\"");
 			}
 		}
 
@@ -74,7 +82,7 @@ namespace Zenith.Verify
 
 			if (source.Any())
 			{
-				throw new ArgumentOutOfRangeException(paramName, $"{paramName} was not empty. Actual={DebugSerialiser.ObjectToString(source)} Message=\"{message}\"");
+				throw new ArgumentOutOfRangeException(paramName, $"{paramName} was not empty. Message=\"{message}\"");
 			}
 		}
 
@@ -84,7 +92,7 @@ namespace Zenith.Verify
 
 			if (!source.Any())
 			{
-				throw new ArgumentOutOfRangeException(paramName, $"{paramName} was empty. Actual={DebugSerialiser.ObjectToString(source)} Message=\"{message}\"");
+				throw new ArgumentOutOfRangeException(paramName, $"{paramName} was empty. Message=\"{message}\"");
 			}
 		}
 
@@ -108,7 +116,7 @@ namespace Zenith.Verify
 			var sourceLength = source.Count();
 			if (sourceLength > length)
 			{
-				throw new ArgumentOutOfRangeException(paramName, $"{sourceLength} exceeds maximum length of {length}. Actual={DebugSerialiser.ObjectToString(source)} Message=\"{message}\"");
+				throw new ArgumentOutOfRangeException(paramName, $"{sourceLength} exceeds maximum length of {length}. Message=\"{message}\"");
 			}
 		}
 	}

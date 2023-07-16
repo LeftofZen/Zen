@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Zenith.Core\Zenith.Core.csproj" />
     <ProjectReference Include="..\Zenith.Linq\Zenith.Linq.csproj" />
     <ProjectReference Include="..\Zenith.Maths\Zenith.Maths.csproj" />
   </ItemGroup>

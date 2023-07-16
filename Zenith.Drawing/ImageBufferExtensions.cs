@@ -22,7 +22,7 @@ namespace Zenith.Drawing
 			}
 		}
 
-		public static IEnumerable<ColourRGB> GetNonEmptyNeighbourColours(this ImageBuffer buf, Point2 p)
+		public static IEnumerable<ColourRGB> GetEmptyNeighbourColours(this ImageBuffer buf, Point2 p)
 		{
 			for (var x = -1; x < 2; ++x)
 			{
@@ -39,7 +39,7 @@ namespace Zenith.Drawing
 			}
 		}
 
-		public static IEnumerable<Point2> GetNonEmptyNeighbourPoints(this ImageBuffer buf, Point2 p)
+		public static IEnumerable<Point2> GetEmptyNeighbourPoints(this ImageBuffer buf, Point2 p)
 		{
 			for (var x = -1; x < 2; ++x)
 			{
