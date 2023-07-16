@@ -49,5 +49,5 @@ foreach ($projectDirectory in $projectDirectories)
 {
     $packagePath = Join-Path $projectDirectory "bin\Release\*.$version.nupkg"
     Write-Host "Pushing NuGet package: $packagePath to $packageSource with key $apiKey"
-    # dotnet nuget push $packagePath --source $packageSource --api-key $apiKey
+    dotnet nuget push $packagePath --source $packageSource --api-key $apiKey
 }
