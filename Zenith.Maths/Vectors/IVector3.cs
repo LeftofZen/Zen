@@ -2,10 +2,12 @@
 
 namespace Zenith.Maths.Vectors
 {
-	public interface IVector3<T> where T : INumber<T>, INumberBase<T>
+	public interface IVector3<T> : IVector<T> where T : INumber<T>, INumberBase<T>
 	{
 		T X { get; set; }
 		T Y { get; set; }
 		T Z { get; set; }
+
+		T[] IVector<T>.Components => new T[] { X, Y, Z };
 	}
 }

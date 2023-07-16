@@ -11,6 +11,7 @@ namespace Zenith.Drawing
 	public class ImageBuffer
 	{
 		private ColourRGB[,] buf;
+		private bool[,] isSet;
 
 		public ImageBuffer(int width, int height)
 		{
@@ -34,13 +35,14 @@ namespace Zenith.Drawing
 
 			img.UnlockBits(imgData);
 		}
+
 		public void Clear()
 			=> Clear(Width, Height);
 
 		private void Clear(int width, int height)
 		{
 			buf = new ColourRGB[height, width];
-			Fill(ColourRGB.None);
+			isSet = new bool[height, width];
 		}
 
 		public bool Contains(int X, int Y)
@@ -59,13 +61,16 @@ namespace Zenith.Drawing
 			=> SetPixel(p.X, p.Y, c);
 
 		public void SetPixel(int X, int Y, ColourRGB c)
-			=> buf[Y, X] = c;
+		{
+			buf[Y, X] = c;
+			isSet[Y, X] = true;
+		}
 
 		public bool IsEmpty(Point2 p)
 			=> IsEmpty(p.X, p.Y);
 
 		public bool IsEmpty(int X, int Y)
-			=> buf[Y, X] == ColourRGB.None;
+			=> isSet[Y, X];
 
 		public void Fill(ColourRGB fillColour)
 			=> buf.Fill(fillColour);

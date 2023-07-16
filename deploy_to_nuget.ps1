@@ -1,3 +1,6 @@
+# Stop script if any part of it fails (ie don't continue)
+$ErrorActionPreference = 'Stop'
+
 # Set the solution directory
 $solutionDirectory = "."
 

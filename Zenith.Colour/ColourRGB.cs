@@ -1,9 +1,25 @@
-﻿using Zenith.Maths.Vectors;
+﻿using Zenith.Core;
+using Zenith.Maths.Vectors;
 
 namespace Zenith.Colour
 {
-	public record struct ColourRGB(float R, float G, float B) : IVector3<float>
+	public record struct ColourRGB : IVector3<float>
 	{
+		public ColourRGB(float r, float g, float b)
+		{
+			R = r;
+			G = g;
+			B = b;
+		}
+
+		public float R { get => r; set { Verify.InRangeInclusive(value, 0f, 1f); r = value; } }
+		public float G { get => g; set { Verify.InRangeInclusive(value, 0f, 1f); g = value; } }
+		public float B { get => b; set { Verify.InRangeInclusive(value, 0f, 1f); b = value; } }
+
+		float r;
+		float g;
+		float b;
+
 		// IVector3
 		public float X { get => R; set => R = value; }
 		public float Y { get => G; set => G = value; }
@@ -11,7 +27,5 @@ namespace Zenith.Colour
 
 		public ColourHSB AsHSB()
 			=> ColourSpaceConverter.RGBtoHSB(this);
-
-		public static readonly ColourRGB None = new() { R = -1f, G = -1f, B = -1f };
 	}
 }

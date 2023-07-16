@@ -6,8 +6,6 @@ namespace Zenith.Colour
 	{
 		public static ColourHSB RGBtoHSB(ColourRGB rgb)
 		{
-			Verify.AreNotEqual(rgb, ColourRGB.None);
-
 			double delta, min;
 			double h = 0, s, b;
 
@@ -63,20 +61,19 @@ namespace Zenith.Colour
 			{
 				int i;
 				double f, p, q, t;
+				var hue = hsb.Hue * 360;
 
-				hsb.Hue = 360 * hsb.Hue;
-
-				if ((int)hsb.Hue == 360)
+				if ((int)hue == 360)
 				{
-					hsb.Hue = 0;
+					hue = 0;
 				}
 				else
 				{
-					hsb.Hue /= 60;
+					hue /= 60;
 				}
 
-				i = (int)Math.Truncate(hsb.Hue);
-				f = hsb.Hue - i;
+				i = (int)Math.Truncate(hue);
+				f = hue - i;
 
 				p = hsb.Brightness * (1.0 - hsb.Saturation);
 				q = hsb.Brightness * (1.0 - (hsb.Saturation * f));

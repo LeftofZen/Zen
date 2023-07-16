@@ -60,6 +60,15 @@ namespace Zenith.Core
 			}
 		}
 
+		public static void InRangeInclusive<T>(T value, T min, T max, [CallerArgumentExpression(nameof(value))] string? valueName = null, string? message = null)
+			where T : IComparable<T>
+		{
+			if (value.CompareTo(min) < 0 || value.CompareTo(max) > 0)
+			{
+				throw new ArgumentOutOfRangeException(valueName, $"{value} ({valueName}) was not within the range [{min}, {max}]. Message=\"{message}\"");
+			}
+		}
+
 		public static void NotNull<T>(T argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null, string? message = null)
 		{
 			if (argument == null)

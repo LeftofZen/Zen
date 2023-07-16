@@ -51,7 +51,7 @@ namespace Zenith.Testing.Colour
 		[Test]
 		public void TestIdempotenceRGB()
 		{
-			var rgb = new ColourRGB { R = 27, G = 87, B = 248 };
+			var rgb = new ColourRGB { R = 0.2f, G = 0.4f, B = 0.8f };
 			var rgb2 = ColourSpaceConverter.HSBtoRGB(ColourSpaceConverter.RGBtoHSB(rgb));
 			Assert.That(rgb.R, Is.EqualTo(rgb2.R).Within(0.0001f));
 			Assert.That(rgb.G, Is.EqualTo(rgb2.G).Within(0.0001f));

@@ -11,22 +11,21 @@ namespace Zenith.Testing.Colour
 		{
 			// arrange
 			var colours = new HashSet<ColourRGB>();
-			_ = colours.Add(new ColourRGB(21, 49, 136));
-			_ = colours.Add(new ColourRGB(255, 19, 54));
-			_ = colours.Add(new ColourRGB(11, 194, 236));
-			_ = colours.Add(new ColourRGB(0, 255, 13));
+			_ = colours.Add(new ColourRGB(1f, 0.2f, 0.4f));
+			_ = colours.Add(new ColourRGB(0.01f, 0.48f, 0.86f));
+			_ = colours.Add(new ColourRGB(0f, 1f, 0.13f));
 
 			// act
 			var result = ColourEqualiser.Equalise(colours);
 
 			// assert
-			Assert.AreEqual(0, result.Min(c => c.R));
-			Assert.AreEqual(0, result.Min(c => c.G));
-			Assert.AreEqual(0, result.Min(c => c.B));
+			Assert.AreEqual(0f, result.Min(c => c.R));
+			Assert.AreEqual(0f, result.Min(c => c.G));
+			Assert.AreEqual(0f, result.Min(c => c.B));
 
-			Assert.AreEqual(255, result.Max(c => c.R));
-			Assert.AreEqual(255, result.Max(c => c.G));
-			Assert.AreEqual(255, result.Max(c => c.B));
+			Assert.AreEqual(1f, result.Max(c => c.R));
+			Assert.AreEqual(1f, result.Max(c => c.G));
+			Assert.AreEqual(1f, result.Max(c => c.B));
 		}
 	}
 }

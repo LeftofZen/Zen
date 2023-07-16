@@ -30,9 +30,9 @@
 
 			foreach (var c in colours)
 			{
-				var r = (c.R - minR) * diffR * 255;
-				var g = (c.G - minG) * diffG * 255;
-				var b = (c.B - minB) * diffB * 255;
+				var r = (c.R - minR) * diffR;
+				var g = (c.G - minG) * diffG;
+				var b = (c.B - minB) * diffB;
 				yield return new ColourRGB() { R = (int)r, G = (int)g, B = (int)b };
 			}
 		}

@@ -7,12 +7,40 @@ namespace Zenith.Testing.Colour
 	public class ColourGeneratorTests
 	{
 		[Test]
-		public void GenerateHSB()
+		public void TestColourGenerator()
 		{
-			var colours = ColourGenerator.GenerateColours_HSB_Random(128);
-			Assert.That(colours.Select(c => c.Hue), Is.All.InRange(0f, 1f));
-			Assert.That(colours.Select(c => c.Saturation), Is.All.InRange(0f, 1f));
-			Assert.That(colours.Select(c => c.Brightness), Is.All.InRange(0f, 1f));
+			var colours = ColourGenerator.GenerateColours_RGB_Uniform(3 * 3 * 3);
+			Assert.AreEqual(27, colours.Count);
+
+			Assert.That(colours.Contains(new ColourRGB(0f, 0f, 0f)));
+			Assert.That(colours.Contains(new ColourRGB(0f, 0f, 0.5f)));
+			Assert.That(colours.Contains(new ColourRGB(0f, 0f, 1f)));
+			Assert.That(colours.Contains(new ColourRGB(0f, 0.5f, 0f)));
+			Assert.That(colours.Contains(new ColourRGB(0f, 0.5f, 0.5f)));
+			Assert.That(colours.Contains(new ColourRGB(0f, 0.5f, 1f)));
+			Assert.That(colours.Contains(new ColourRGB(0f, 1f, 0f)));
+			Assert.That(colours.Contains(new ColourRGB(0f, 1f, 0.5f)));
+			Assert.That(colours.Contains(new ColourRGB(0f, 1f, 1f)));
+
+			Assert.That(colours.Contains(new ColourRGB(0.5f, 0f, 0f)));
+			Assert.That(colours.Contains(new ColourRGB(0.5f, 0f, 0.5f)));
+			Assert.That(colours.Contains(new ColourRGB(0.5f, 0f, 1f)));
+			Assert.That(colours.Contains(new ColourRGB(0.5f, 0.5f, 0f)));
+			Assert.That(colours.Contains(new ColourRGB(0.5f, 0.5f, 0.5f)));
+			Assert.That(colours.Contains(new ColourRGB(0.5f, 0.5f, 1f)));
+			Assert.That(colours.Contains(new ColourRGB(0.5f, 1f, 0f)));
+			Assert.That(colours.Contains(new ColourRGB(0.5f, 1f, 0.5f)));
+			Assert.That(colours.Contains(new ColourRGB(0.5f, 1f, 1f)));
+
+			Assert.That(colours.Contains(new ColourRGB(1f, 0f, 0f)));
+			Assert.That(colours.Contains(new ColourRGB(1f, 0f, 0.5f)));
+			Assert.That(colours.Contains(new ColourRGB(1f, 0f, 1f)));
+			Assert.That(colours.Contains(new ColourRGB(1f, 0.5f, 0f)));
+			Assert.That(colours.Contains(new ColourRGB(1f, 0.5f, 0.5f)));
+			Assert.That(colours.Contains(new ColourRGB(1f, 0.5f, 1f)));
+			Assert.That(colours.Contains(new ColourRGB(1f, 1f, 0f)));
+			Assert.That(colours.Contains(new ColourRGB(1f, 1f, 0.5f)));
+			Assert.That(colours.Contains(new ColourRGB(1f, 1f, 1f)));
 		}
 	}
 }

@@ -1,96 +1,75 @@
 ﻿using System.Diagnostics;
-using Zenith.Linq;
+using System.Numerics;
+using Zenith.Maths.Vectors;
 
 namespace Zenith.Colour
 {
 	public static class ColourGenerator
 	{
 		public static HashSet<ColourRGB> GenerateColours_RGB_All()
-			=> GenerateColours_RGB_Uniform((int)Math.Pow(2, 24));
+			=> GenerateColours_Uniform<ColourRGB>((int)Math.Pow(2, 24));
 
 		public static HashSet<ColourRGB> GenerateColours_RGB_Uniform(int pixelCount)
+			=> GenerateColours_Uniform<ColourRGB>(pixelCount);
+
+		public static HashSet<ColourHSB> GenerateColours_HSB_Uniform(int pixelCount)
+			=> GenerateColours_Uniform<ColourHSB>(pixelCount);
+
+		public static HashSet<T> GenerateColours_Uniform<T>(int pixelCount) where T : IVector3<float>, new()
+			=> GenerateColours_Uniform<T>(pixelCount, DefaultDomain);
+
+		public static HashSet<T> GenerateColours_Uniform<T>(int pixelCount, DomainBound3<float> domainBounds) where T : IVector3<float>, new()
 		{
-			Console.WriteLine("Generating ColourRGBs");
+			Console.WriteLine("Generating Colours");
 
 			if (pixelCount == 0)
 			{
 				Console.WriteLine("no pixels");
-				return new HashSet<ColourRGB>();
+				return new HashSet<T>();
 			}
 
-			var setOfAllColourRGBs = new HashSet<ColourRGB>(pixelCount);
+			var setOfAllColours = new HashSet<T>(pixelCount);
+			var rnd = new Random(1);
 
 			var stepsPerChannel = (int)Math.Pow(pixelCount, 1f / 3f);
-			var stepSize = 1f / (stepsPerChannel - 1); // subtract 1 because range is inclusive - 3 steps is [0, 0.5, 1]
-			var rSteps = stepsPerChannel;
-			var gSteps = stepsPerChannel;
-			var bSteps = stepsPerChannel;
+			var stepSizeX = (domainBounds.X.Size / (stepsPerChannel - 1)) + domainBounds.X.Lower; // subtract 1 because range is inclusive - 3 steps is [0, 0.5, 1]
+			var stepSizeY = (domainBounds.Y.Size / (stepsPerChannel - 1)) + domainBounds.Y.Lower; // subtract 1 because range is inclusive - 3 steps is [0, 0.5, 1]
+			var stepSizeZ = (domainBounds.Z.Size / (stepsPerChannel - 1)) + domainBounds.Z.Lower; // subtract 1 because range is inclusive - 3 steps is [0, 0.5, 1]
 
-			for (var r = 0; r < rSteps; ++r)
+			var xSteps = stepsPerChannel;
+			var ySteps = stepsPerChannel;
+			var zSteps = stepsPerChannel;
+
+			for (var x = 0; x < xSteps; ++x)
 			{
-				for (var g = 0; g < gSteps; ++g)
+				for (var y = 0; y < ySteps; ++y)
 				{
-					for (var b = 0; b < bSteps; ++b)
+					for (var z = 0; z < zSteps; ++z)
 					{
-						var rr = stepSize * r;
-						var gg = stepSize * g;
-						var bb = stepSize * b;
+						var hh = stepSizeX * x;
+						var ss = stepSizeY * y;
+						var bb = stepSizeZ * z;
 
-						var c = new ColourRGB() { R = (int)(rr * 255), G = (int)(gg * 255), B = (int)(bb * 255) };
+						var c = new T() { X = hh, Y = ss, Z = bb };
 
-						if (!setOfAllColourRGBs.Add(c))
+						if (!setOfAllColours.Add(c))
 						{
-							Trace.Assert(false, "duplicate ColourRGB detected", c.ToString());
+							Trace.Assert(false, "duplicate colour detected", c.ToString());
 						}
 					}
 				}
 			}
 
-			Trace.Assert(setOfAllColourRGBs.Count == stepsPerChannel * stepsPerChannel * stepsPerChannel);
-
-			var rnd = new Random(1);
-
-			// leftover from non-integer cube root
-			while (setOfAllColourRGBs.Count < pixelCount)
-			{
-				var rgb = new ColourRGB()
-				{
-					R = rnd.Next(0, 256),
-					G = rnd.Next(0, 256),
-					B = rnd.Next(0, 256)
-				};
-
-				_ = setOfAllColourRGBs.Add(rgb);
-			}
-
-			Trace.Assert(setOfAllColourRGBs.Count >= pixelCount);
-
-			return setOfAllColourRGBs;
-		}
-
-		public static HashSet<ColourHSB> GenerateColours_HSB_Random(int pixelCount)
-		{
-			Console.WriteLine("Generating ColourRGBs");
-
-			if (pixelCount == 0)
-			{
-				Console.WriteLine("no pixels");
-				return new HashSet<ColourHSB>();
-			}
-
-			var setOfAllColours = new HashSet<ColourHSB>(pixelCount);
-			var rnd = new Random(1);
-
 			while (setOfAllColours.Count < pixelCount)
 			{
-				var hsb = new ColourHSB()
+				var col = new T()
 				{
-					Hue = (float)rnd.NextDouble(),
-					Saturation = (float)rnd.NextDouble(),
-					Brightness = (float)rnd.NextDouble(),
+					X = (float)rnd.NextDouble(),
+					Y = (float)rnd.NextDouble(),
+					Z = (float)rnd.NextDouble(),
 				};
 
-				_ = setOfAllColours.Add(hsb);
+				_ = setOfAllColours.Add(col);
 			}
 
 			Trace.Assert(setOfAllColours.Count == pixelCount);
@@ -99,29 +78,33 @@ namespace Zenith.Colour
 		}
 
 		public static HashSet<ColourRGB> GenerateColours_RGB_Pastel(int pixelCount)
-		{
-			var baseline = GenerateColours_RGB_All().ToList();
-			baseline.Shuffle();
-
-			var result = new List<ColourRGB>();
-			var enumerator = baseline.GetEnumerator();
-			do
-			{
-				var current = enumerator.Current;
-				if (IsPastel(current))
-				{
-					result.Add(current);
-				}
-			}
-			while (result.Count < pixelCount && enumerator.MoveNext());
-
-			return result.ToHashSet();
-		}
+			=> GenerateColours_HSB_Pastel(pixelCount).Select(c => c.AsRGB()).ToHashSet();
+		public static HashSet<ColourHSB> GenerateColours_HSB_Pastel(int pixelCount)
+			=> GenerateColours_Uniform<ColourHSB>(pixelCount, PastelDomainHSB);
 
 		public static bool IsPastel(ColourRGB colourRGB)
 			=> IsPastel(colourRGB.AsHSB());
 
 		public static bool IsPastel(ColourHSB colourHSB)
-			=> colourHSB.Brightness > 0.5f && colourHSB.Saturation < 0.5f && colourHSB.Saturation > 0.2f;
+			=> colourHSB.Hue >= PastelDomainHSB.X.Lower
+			&& colourHSB.Hue <= PastelDomainHSB.X.Upper
+			&& colourHSB.Saturation >= PastelDomainHSB.Y.Lower
+			&& colourHSB.Saturation <= PastelDomainHSB.Y.Upper
+			&& colourHSB.Brightness >= PastelDomainHSB.Z.Lower
+			&& colourHSB.Brightness <= PastelDomainHSB.Z.Upper;
+
+		public static DomainBound3<float> PastelDomainHSB
+			=> new(new(0f, 1f), new(0.2f, 0.5f), new(0.5f, 1f));
+
+		public static DomainBound3<float> DefaultDomain
+			=> new(new(0f, 1f), new(0f, 1f), new(0f, 1f));
 	}
+
+	public record DomainBound<T>(T Lower, T Upper) where T : INumber<T>
+	{
+		public T Size => Upper - Lower;
+	}
+
+	// could probably use IVector3 instead
+	public record DomainBound3<T>(DomainBound<T> X, DomainBound<T> Y, DomainBound<T> Z) where T : INumber<T>;
 }
