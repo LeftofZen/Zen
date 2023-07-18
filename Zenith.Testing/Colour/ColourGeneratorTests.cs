@@ -66,5 +66,12 @@ namespace Zenith.Testing.Colour
 			Assert.AreEqual(rgbColours.Count, hsbColours.Count);
 			Assert.AreEqual(hsbColours.Count, rgbColours2.Count);
 		}
+
+		[Test]
+		public void GenerateColours_Uniform()
+		{
+			Assert.DoesNotThrow(() => ColourGenerator.GenerateColours_Uniform<ColourRGB>((int)Math.Pow(2, 24), ColourGenerator.DefaultDomain));
+			_ = Assert.Throws<ArgumentOutOfRangeException>(() => ColourGenerator.GenerateColours_Uniform<ColourRGB>((int)Math.Pow(2, 24) + 1, ColourGenerator.DefaultDomain));
+		}
 	}
 }
