@@ -9,6 +9,7 @@
 			{
 				result &= source.Add(v);
 			}
+
 			return result;
 		}
 	}
