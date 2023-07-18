@@ -24,7 +24,7 @@ namespace Zenith.Colour
 			if (typeof(T) == typeof(ColourRGB))
 			{
 				// validate colour space vs pixelCount
-				var totalValidColours = (int)((domainBounds.X.Size * 255) + (domainBounds.Y.Size * 255) + (domainBounds.Z.Size * 255)); // do not factor the 255 out - we must multiply in each dimension individually - combining dimensions mayb produce off-by-one errors
+				var totalValidColours = (int)(domainBounds.X.Size * 255) * (int)(domainBounds.Y.Size * 255) * (int)(domainBounds.Z.Size * 255); // do not factor the 255 out - we must multiply in each dimension individually - combining dimensions mayb produce off-by-one errors
 				Verify.LessThanOrEqualTo(pixelCount, totalValidColours, $"Requested {pixelCount} colours but only found {totalValidColours} valid colours in RGB space for the given domain {domainBounds}");
 			}
 
