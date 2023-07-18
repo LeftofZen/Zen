@@ -7,6 +7,8 @@ namespace Zenith.Colour
 {
 	public static class ColourGenerator
 	{
+		static readonly Random rnd = new(1);
+
 		public static HashSet<ColourRGB> GenerateColours_RGB_All()
 			=> GenerateColours_Uniform<ColourRGB>((int)Math.Pow(2, 24));
 
@@ -16,13 +18,40 @@ namespace Zenith.Colour
 		public static HashSet<ColourHSB> GenerateColours_HSB_Uniform(int pixelCount)
 			=> GenerateColours_Uniform<ColourHSB>(pixelCount);
 
+		public static HashSet<ColourRGB> GenerateColours_HSB_Uniform_RGB(int pixelCount)
+		{
+			var colours = GenerateColours_Uniform<ColourHSB>(pixelCount, DefaultDomain).Select(c => c.AsRGB()).ToHashSet();
+			while (colours.Count < pixelCount)
+			{
+				var col = GenColour<ColourHSB>(DefaultDomain).AsRGB();
+				_ = colours.Add(col);
+			}
+
+			Verify.AreEqual(colours.Count, pixelCount);
+			return colours;
+		}
+
 		public static HashSet<T> GenerateColours_Uniform<T>(int pixelCount) where T : IVector3<float>, new()
 			=> GenerateColours_Uniform<T>(pixelCount, DefaultDomain);
+
 		public static HashSet<ColourRGB> GenerateColours_RGB_Pastel(int pixelCount)
 			=> GenerateColours_Uniform<ColourRGB>(pixelCount, PastelDomainRGB);
 
 		public static HashSet<ColourHSB> GenerateColours_HSB_Pastel(int pixelCount)
 			=> GenerateColours_Uniform<ColourHSB>(pixelCount, PastelDomainHSB);
+
+		public static HashSet<ColourRGB> GenerateColours_HSB_Pastel_RGB(int pixelCount)
+		{
+			var colours = GenerateColours_Uniform<ColourHSB>(pixelCount, PastelDomainHSB).Select(c => c.AsRGB()).ToHashSet();
+			while (colours.Count < pixelCount)
+			{
+				var col = GenColour<ColourHSB>(PastelDomainHSB).AsRGB();
+				_ = colours.Add(col);
+			}
+
+			Verify.AreEqual(colours.Count, pixelCount);
+			return colours;
+		}
 
 		public static HashSet<T> GenerateColours_Uniform<T>(int pixelCount, DomainBound3<float> domainBounds) where T : IVector3<float>, new()
 		{
@@ -38,8 +67,7 @@ namespace Zenith.Colour
 				return new HashSet<T>();
 			}
 
-			var setOfAllColours = new HashSet<T>(pixelCount);
-			var rnd = new Random(1);
+			var colours = new HashSet<T>(pixelCount);
 
 			var stepsPerChannel = (int)Math.Pow(pixelCount, 1f / 3f); // assumes a 3D colour space
 			var stepSizeX = domainBounds.X.Size / (stepsPerChannel - 1); // subtract 1 because range is inclusive - 3 steps is [0, 0.5, 1]
@@ -62,7 +90,7 @@ namespace Zenith.Colour
 
 						var c = new T() { X = hh, Y = ss, Z = bb };
 
-						if (!setOfAllColours.Add(c))
+						if (!colours.Add(c))
 						{
 							Trace.Assert(false, "duplicate colour detected", c.ToString());
 						}
@@ -70,22 +98,32 @@ namespace Zenith.Colour
 				}
 			}
 
+			GenAdditionalColours(colours, pixelCount, domainBounds);
+
+			Verify.AreEqual(colours.Count, pixelCount);
+
+			return colours;
+		}
+
+		private static void GenAdditionalColours<T>(HashSet<T> setOfAllColours, int pixelCount, DomainBound3<float> domainBounds) where T : IVector3<float>, new()
+		{
 			while (setOfAllColours.Count < pixelCount)
 			{
-				var col = new T()
-				{
-					X = (float)rnd.NextDouble(),
-					Y = (float)rnd.NextDouble(),
-					Z = (float)rnd.NextDouble(),
-				};
-
+				var col = GenColour<T>(domainBounds);
 				_ = setOfAllColours.Add(col);
 			}
-
-			Trace.Assert(setOfAllColours.Count == pixelCount);
-
-			return setOfAllColours;
 		}
+
+		private static T GenColour<T>(DomainBound3<float> domainBounds) where T : IVector3<float>, new()
+		{
+			return new T()
+			{
+				X = (float)((rnd.NextDouble() * domainBounds.X.Size) + domainBounds.X.Lower),
+				Y = (float)((rnd.NextDouble() * domainBounds.Y.Size) + domainBounds.Y.Lower),
+				Z = (float)((rnd.NextDouble() * domainBounds.Z.Size) + domainBounds.Z.Lower),
+			};
+		}
+
 		public static bool IsPastel(ColourRGB colourRGB)
 			=> IsPastel(colourRGB.AsHSB());
 

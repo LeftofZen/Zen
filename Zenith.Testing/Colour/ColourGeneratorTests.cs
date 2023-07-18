@@ -18,6 +18,9 @@ namespace Zenith.Testing.Colour
 
 			var coloursHSB = ColourGenerator.GenerateColours_HSB_Uniform(pixels);
 			Assert.AreEqual(pixels, coloursHSB.Count, "RGB uniform");
+
+			var coloursHSBRGB = ColourGenerator.GenerateColours_HSB_Uniform_RGB(pixels);
+			Assert.AreEqual(pixels, coloursHSBRGB.Count, "HSB uniform in RGB");
 		}
 
 		[Test]
@@ -30,8 +33,11 @@ namespace Zenith.Testing.Colour
 			var coloursPastelRGB = ColourGenerator.GenerateColours_RGB_Pastel(pixels);
 			Assert.AreEqual(pixels, coloursPastelRGB.Count, "RGB pastel");
 
-			var coloursPastelHSB = ColourGenerator.GenerateColours_HSB_Uniform(pixels);
+			var coloursPastelHSB = ColourGenerator.GenerateColours_HSB_Pastel(pixels);
 			Assert.AreEqual(pixels, coloursPastelHSB.Count, "HSB pastel");
+
+			var coloursPastelHSBRGB = ColourGenerator.GenerateColours_HSB_Pastel_RGB(pixels);
+			Assert.AreEqual(pixels, coloursPastelHSBRGB.Count, "HSB pastel in RGB");
 		}
 
 		[Test]
@@ -59,7 +65,6 @@ namespace Zenith.Testing.Colour
 
 			Assert.Multiple(() =>
 			{
-
 				Assert.That(colours.Contains(new ColourRGB(0f, 0f, 0f)));
 				Assert.That(colours.Contains(new ColourRGB(0f, 0f, 0.5f)));
 				Assert.That(colours.Contains(new ColourRGB(0f, 0f, 1f)));
