@@ -13,8 +13,7 @@ namespace Zenith.Core
 		/// <param name="value"></param>
 		public static void Fill<T>(this Array array, T value)
 		{
-			// Skipping prologue with checks and whatnot. Also ignoring cases where the size of
-			// the array exceeds int.MaxValue, feel free to check/chunk if you need to support that.
+			// Ignoring cases where the size of the array exceeds int.MaxValue
 
 			ref var reference = ref MemoryMarshal.GetArrayDataReference(array);
 			var span = MemoryMarshal.CreateSpan(ref Unsafe.As<byte, T>(ref reference), array.Length);

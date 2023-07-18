@@ -1,6 +1,4 @@
-﻿using Zenith.Core;
-
-namespace Zenith.Colour
+﻿namespace Zenith.Colour
 {
 	public static class ColourSpaceConverter
 	{

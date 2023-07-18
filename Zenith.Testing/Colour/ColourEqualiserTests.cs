@@ -4,10 +4,10 @@ using Zenith.Colour;
 namespace Zenith.Testing.Colour
 {
 	[TestFixture]
-	public class ColourEqualiserTest
+	public class ColourEqualiserTests
 	{
 		[Test]
-		public void TestEqualise()
+		public void Equalise()
 		{
 			// arrange
 			var colours = new HashSet<ColourRGB>();

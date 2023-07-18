@@ -36,8 +36,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Zenith.Linq\Zenith.Linq.csproj" />
-  </ItemGroup>
-
 </Project>

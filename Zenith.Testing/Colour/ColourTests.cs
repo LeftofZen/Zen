@@ -7,7 +7,7 @@ namespace Zenith.Testing.Colour
 	public class ColourTests
 	{
 		[Test]
-		public void TestRGB()
+		public void RGB()
 		{
 			// positive out of range
 			_ = Assert.Throws<ArgumentOutOfRangeException>(() => new ColourRGB(1.01f, 0.01f, 0.01f));
@@ -21,7 +21,7 @@ namespace Zenith.Testing.Colour
 		}
 
 		[Test]
-		public void TestHSB()
+		public void HSB()
 		{
 			// positive out of range
 			_ = Assert.Throws<ArgumentOutOfRangeException>(() => new ColourHSB(1.01f, 0.01f, 0.01f));

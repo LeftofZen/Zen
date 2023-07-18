@@ -7,7 +7,7 @@ namespace Zenith.Testing.System.Drawing
 	public class ImageBufferTests
 	{
 		[Test]
-		public void TestIsEmpty()
+		public void IsEmpty()
 		{
 			var buf = new ImageBuffer(8, 8);
 

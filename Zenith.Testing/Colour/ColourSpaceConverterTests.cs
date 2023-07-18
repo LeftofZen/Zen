@@ -7,7 +7,7 @@ namespace Zenith.Testing.Colour
 	public class ColourSpaceConverterTests
 	{
 		[Test]
-		public void TestRGBtoHSB()
+		public void RGBtoHSB()
 		{
 			Assert.Multiple(() =>
 			{
@@ -30,7 +30,7 @@ namespace Zenith.Testing.Colour
 		}
 
 		[Test]
-		public void TestHSBToRGB()
+		public void HSBToRGB()
 		{
 			Assert.Multiple(() =>
 			{
@@ -49,7 +49,7 @@ namespace Zenith.Testing.Colour
 		}
 
 		[Test]
-		public void TestIdempotenceRGB()
+		public void IdempotenceRGB()
 		{
 			var rgb = new ColourRGB { R = 0.2f, G = 0.4f, B = 0.8f };
 			var rgb2 = ColourSpaceConverter.HSBtoRGB(ColourSpaceConverter.RGBtoHSB(rgb));
@@ -59,7 +59,7 @@ namespace Zenith.Testing.Colour
 		}
 
 		[Test]
-		public void TestIdempotenceHSB()
+		public void IdempotenceHSB()
 		{
 			var hsb = new ColourHSB { Hue = 0.12f, Saturation = 0.87f, Brightness = 0.48f };
 			var hsb2 = ColourSpaceConverter.RGBtoHSB(ColourSpaceConverter.HSBtoRGB(hsb));

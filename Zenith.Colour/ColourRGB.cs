@@ -1,9 +1,8 @@
 ﻿using Zenith.Core;
-using Zenith.Maths.Vectors;
 
 namespace Zenith.Colour
 {
-	public record struct ColourRGB : IVector3<float>
+	public record struct ColourRGB : IColour
 	{
 		public ColourRGB(float r, float g, float b)
 		{

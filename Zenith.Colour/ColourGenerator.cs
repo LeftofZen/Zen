@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
+using Zenith.Core;
 using Zenith.Maths.Vectors;
 
 namespace Zenith.Colour
@@ -20,6 +21,13 @@ namespace Zenith.Colour
 
 		public static HashSet<T> GenerateColours_Uniform<T>(int pixelCount, DomainBound3<float> domainBounds) where T : IVector3<float>, new()
 		{
+			if (typeof(T) == typeof(ColourRGB))
+			{
+				// validate colour space vs pixelCount
+				var totalValidColours = (int)((domainBounds.X.Size * 255) + (domainBounds.Y.Size * 255) + (domainBounds.Z.Size * 255)); // do not factor the 255 out - we must multiply in each dimension individually - combining dimensions mayb produce off-by-one errors
+				Verify.LessThanOrEqualTo(pixelCount, totalValidColours, $"Requested {pixelCount} colours but only found {totalValidColours} valid colours in RGB space for the given domain {domainBounds}");
+			}
+
 			Console.WriteLine("Generating Colours");
 
 			if (pixelCount == 0)
@@ -31,7 +39,7 @@ namespace Zenith.Colour
 			var setOfAllColours = new HashSet<T>(pixelCount);
 			var rnd = new Random(1);
 
-			var stepsPerChannel = (int)Math.Pow(pixelCount, 1f / 3f);
+			var stepsPerChannel = (int)Math.Pow(pixelCount, 1f / 3f); // assumes a 3D colour space
 			var stepSizeX = (domainBounds.X.Size / (stepsPerChannel - 1)) + domainBounds.X.Lower; // subtract 1 because range is inclusive - 3 steps is [0, 0.5, 1]
 			var stepSizeY = (domainBounds.Y.Size / (stepsPerChannel - 1)) + domainBounds.Y.Lower; // subtract 1 because range is inclusive - 3 steps is [0, 0.5, 1]
 			var stepSizeZ = (domainBounds.Z.Size / (stepsPerChannel - 1)) + domainBounds.Z.Lower; // subtract 1 because range is inclusive - 3 steps is [0, 0.5, 1]
@@ -78,7 +86,7 @@ namespace Zenith.Colour
 		}
 
 		public static HashSet<ColourRGB> GenerateColours_RGB_Pastel(int pixelCount)
-			=> GenerateColours_HSB_Pastel(pixelCount).Select(c => c.AsRGB()).ToHashSet();
+			=> GenerateColours_Uniform<ColourRGB>(pixelCount, PastelDomainRGB);
 		public static HashSet<ColourHSB> GenerateColours_HSB_Pastel(int pixelCount)
 			=> GenerateColours_Uniform<ColourHSB>(pixelCount, PastelDomainHSB);
 
@@ -95,6 +103,8 @@ namespace Zenith.Colour
 
 		public static DomainBound3<float> PastelDomainHSB
 			=> new(new(0f, 1f), new(0.2f, 0.5f), new(0.5f, 1f));
+		public static DomainBound3<float> PastelDomainRGB
+			=> new(new(0.6f, 0.9f), new(0.6f, 0.9f), new(0.6f, 0.9f));
 
 		public static DomainBound3<float> DefaultDomain
 			=> new(new(0f, 1f), new(0f, 1f), new(0f, 1f));

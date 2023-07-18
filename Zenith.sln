@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Core", "Zenith.Core\Zenith.Core.csproj", "{6B478FB0-0032-4ACF-BB33-2474538EA3C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Linq", "Zenith.Linq\Zenith.Linq.csproj", "{BC746889-685D-4D0F-BE31-BDC26ACD3656}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6B478FB0-0032-4ACF-BB33-2474538EA3C1} = {6B478FB0-0032-4ACF-BB33-2474538EA3C1}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Colour", "Zenith.Colour\Zenith.Colour.csproj", "{D812F62D-DB34-4C91-A34C-7A5A90127FB1}"
 	ProjectSection(ProjectDependencies) = postProject
