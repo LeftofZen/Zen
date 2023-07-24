@@ -1,11 +1,9 @@
-﻿using System.Drawing;
-using Zenith.Colour;
-using System.Drawing.Imaging;
+﻿using Zenith.Colour;
 using Zenith.Maths;
 using Zenith.Maths.Points;
 using Zenith.Core;
 
-namespace Zenith.System.Drawing
+namespace Zenith.Drawing
 {
 	public class ImageBuffer
 	{
@@ -21,21 +19,6 @@ namespace Zenith.System.Drawing
 		}
 
 		public float Radius { get; init; }
-
-		public ImageBuffer(Bitmap img) : this(img.Width, img.Height)
-		{
-			var rect = new Rectangle(0, 0, Width, Height);
-			var imgData = img.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-			for (var y = 0; y < Height; ++y)
-			{
-				for (var x = 0; x < Width; ++x)
-				{
-					SetPixel(x, y, imgData.GetPixel(x, y));
-				}
-			}
-
-			img.UnlockBits(imgData);
-		}
 
 		public void Clear()
 			=> Clear(Width, Height);
@@ -97,38 +80,5 @@ namespace Zenith.System.Drawing
 
 		public Point2 Middle
 			=> new(Width / 2, Height / 2);
-
-		public Image GetImage()
-		{
-			if (Width == 0 || Height == 0)
-			{
-				throw new ArgumentOutOfRangeException("Width/Height", $"Image dimensions were invalid. Width={Width} Height={Height}");
-			}
-
-			var img = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
-			var rect = new Rectangle(0, 0, Width, Height);
-			var imgData = img.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-			for (var y = 0; y < Height; ++y)
-			{
-				for (var x = 0; x < Width; ++x)
-				{
-					imgData.SetPixel(x, y, !IsEmpty(x, y) ? GetPixel(x, y) : Color.White.ToColourRGB());
-				}
-			}
-
-			img.UnlockBits(imgData);
-			return img;
-		}
-
-		public void Save(string path)
-			=> Save(GetImage(), path);
-
-		private void Save(Image i, string path)
-		{
-			Console.WriteLine("Saving");
-			var filename = @$"{path}\img_{DateTime.Now.ToString().Replace(':', '-')}_{Width}x{Height}.png";
-			filename = filename.Replace(' ', '_');
-			i.Save(filename, ImageFormat.Png);
-		}
 	}
 }

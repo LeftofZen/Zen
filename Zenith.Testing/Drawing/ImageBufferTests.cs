@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Zenith.System.Drawing;
+using Zenith.Drawing;
 
-namespace Zenith.Testing.System.Drawing
+namespace Zenith.Testing.Drawing
 {
 	[TestFixture]
 	public class ImageBufferTests

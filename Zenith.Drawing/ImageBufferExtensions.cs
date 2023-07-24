@@ -1,7 +1,7 @@
 ﻿using Zenith.Colour;
 using Zenith.Maths.Points;
 
-namespace Zenith.System.Drawing
+namespace Zenith.Drawing
 {
 	public static class ImageBufferExtensions
 	{
