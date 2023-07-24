@@ -27,7 +27,7 @@ namespace Zenith.System.Drawing
 		public static unsafe ColourRGB GetPixel(this BitmapData d, int X, int Y)
 		{
 			var ptr = GetPtrToFirstPixel(d, X, Y);
-			return new() { R = (int)(ptr[2] / 255f), G = (int)(ptr[1] / 255f), B = (int)(ptr[0] / 255f) }; // alpha is ptr[3]);
+			return new() { R = ptr[2] / 255f, G = ptr[1] / 255f, B = ptr[0] / 255f }; // alpha is ptr[3]);
 		}
 
 		public static unsafe void SetPixel(this BitmapData d, Point p, ColourRGB c)

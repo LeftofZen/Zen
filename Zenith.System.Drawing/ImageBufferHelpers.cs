@@ -15,7 +15,8 @@ namespace Zenith.System.Drawing
 			{
 				for (var x = 0; x < imageBuffer.Width; ++x)
 				{
-					imageBuffer.SetPixel(x, y, imgData.GetPixel(x, y));
+					var pixel = imgData.GetPixel(x, y);
+					imageBuffer.SetPixel(x, y, pixel);
 				}
 			}
 

@@ -33,15 +33,16 @@ namespace Zenith.System.Drawing
 			return img;
 		}
 
-		public static void Save(this ImageBuffer imageBuffer, string directory)
+		public static string Save(this ImageBuffer imageBuffer, string directory)
 			=> Save(imageBuffer.GetImage(), directory);
 
-		private static void Save(Image image, string directory)
+		private static string Save(Image image, string directory)
 		{
 			Console.WriteLine("Saving");
 			var filename = @$"{directory}\img_{DateTime.Now.ToString().Replace(':', '-')}_{image.Width}x{image.Height}.png";
 			filename = filename.Replace(' ', '_');
 			image.Save(filename, ImageFormat.Png);
+			return filename;
 		}
 	}
 }

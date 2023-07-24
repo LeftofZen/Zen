@@ -27,6 +27,9 @@ namespace Zenith.Colour
 		public ColourHSB AsHSB()
 			=> ColourSpaceConverter.RGBtoHSB(this);
 
+		public Pixel AsPixel()
+			=> new((int)(R * 255), (int)(G * 255), (int)(B * 255));
+
 		#region Predefined Colours
 
 		public static readonly ColourRGB Black = new(0, 0, 0);
