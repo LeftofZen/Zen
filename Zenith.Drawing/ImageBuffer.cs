@@ -7,7 +7,7 @@ namespace Zenith.Drawing
 {
 	public class ImageBuffer
 	{
-		private ColourRGB[,] buf;
+		private ColourRGB[,] buf; // make some Pixel : IVector3<int> class in future?
 		private bool[,] isSet;
 
 #pragma warning disable CS8618 // Bogus error - Clear() method sets buf and isSet
@@ -25,8 +25,8 @@ namespace Zenith.Drawing
 
 		private void Clear(int width, int height)
 		{
-			buf = new ColourRGB[height, width];
-			isSet = new bool[height, width];
+			buf = new ColourRGB[width, height];
+			isSet = new bool[width, height];
 		}
 
 		public bool Contains(int X, int Y)
@@ -39,31 +39,31 @@ namespace Zenith.Drawing
 			=> GetPixel(p.X, p.Y);
 
 		public ColourRGB GetPixel(int X, int Y)
-			=> buf[Y, X];
+			=> buf[X, Y];
 
 		public void SetPixel(Point2 p, ColourRGB c)
 			=> SetPixel(p.X, p.Y, c);
 
 		public void SetPixel(int X, int Y, ColourRGB c)
 		{
-			buf[Y, X] = c;
-			isSet[Y, X] = true;
+			buf[X, Y] = c;
+			isSet[X, Y] = true;
 		}
 
 		public bool IsEmpty(Point2 p)
 			=> IsEmpty(p.X, p.Y);
 
 		public bool IsEmpty(int X, int Y)
-			=> !isSet[Y, X];
+			=> !isSet[X, Y];
 
 		public void Fill(ColourRGB fillColour)
 			=> buf.Fill(fillColour);
 
 		public void FillRect(int X, int Y, int Width, int Height, ColourRGB c)
 		{
-			for (var x = X; x < X + Width; ++x)
+			for (var y = Y; y < Y + Height; ++y)
 			{
-				for (var y = Y; y < Y + Height; ++y)
+				for (var x = X; x < X + Width; ++x)
 				{
 					SetPixel(x, y, c);
 				}
@@ -72,6 +72,7 @@ namespace Zenith.Drawing
 
 		public int Width
 			=> buf.GetLength(1);
+
 		public int Height
 			=> buf.GetLength(0);
 
