@@ -26,5 +26,20 @@ namespace Zenith.Colour
 
 		public ColourHSB AsHSB()
 			=> ColourSpaceConverter.RGBtoHSB(this);
+
+		#region Predefined Colours
+
+		public static readonly ColourRGB Black = new(0, 0, 0);
+		public static readonly ColourRGB White = new(1, 1, 1);
+
+		public static readonly ColourRGB Red = new(1, 0, 0);
+		public static readonly ColourRGB Green = new(0, 1, 0);
+		public static readonly ColourRGB Blue = new(0, 0, 1);
+
+		public static readonly ColourRGB Yellow = new(1, 1, 0);
+		public static readonly ColourRGB Cyan = new(0, 1, 1);
+		public static readonly ColourRGB Magenta = new(1, 0, 1);
+
+		#endregion
 	}
 }

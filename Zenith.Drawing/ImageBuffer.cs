@@ -71,10 +71,10 @@ namespace Zenith.Drawing
 		}
 
 		public int Width
-			=> buf.GetLength(1);
+			=> buf.GetLength(0);
 
 		public int Height
-			=> buf.GetLength(0);
+			=> buf.GetLength(1);
 
 		public int NumberOfPixels
 			=> Width * Height;
