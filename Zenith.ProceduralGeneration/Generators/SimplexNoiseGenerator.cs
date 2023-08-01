@@ -1,28 +1,12 @@
-﻿using heightmap_gen.Algorithms;
+﻿using Zenith.Algorithms;
 
-namespace heightmap_gen.Generators
+namespace Zenith.ProceduralGeneration
 {
-	public record SimplexNoiseParams(
-		int Width,
-		int Height,
-		long Seed = 0,
-		double XOffset = 0,
-		double YOffset = 0,
-		int Octaves = 8,
-		double Lacunarity = 3.0,
-		double Persistence = 0.5,
-		double InitialAmplitude = 1,
-		double InitialFrequency = 0.005,
-		double Redistribution = 1,
-		bool UseTerracing = false,
-		int TerraceCount = 10,
-		bool NormaliseOutput = true);
-
 	public static class SimplexNoiseGenerator
 	{
 		public static double[,] Generate(SimplexNoiseParams snp)
 		{
-			var noise = new OpenSimplexNoise(snp.Seed);
+			var noise = new OpenSimplexNoise(snp.Seed == 0 ? snp.Seed : new Random().NextInt64());
 			var data = new double[snp.Width, snp.Height];
 
 			for (var y = 0; y < data.GetLength(1); y++)
@@ -52,12 +36,6 @@ namespace heightmap_gen.Generators
 
 					total = Math.Pow(total, snp.Redistribution);
 
-					//terraces
-					if (snp.UseTerracing)
-					{
-						total = Math.Round(total * snp.TerraceCount);
-					}
-
 					// normalise
 					total /= totalAmplitude;
 
@@ -70,12 +48,43 @@ namespace heightmap_gen.Generators
 				data.Normalise();
 			}
 
+			if (snp.TerraceCount > 1)
+			{
+				data.Terrace(snp.TerraceCount);
+			}
+
 			return data;
 		}
 	}
 
 	public static class NoiseHelpers
 	{
+		public static void Terrace(this double[,] data, int count)
+		{
+			var min = double.MaxValue;
+			var max = double.MinValue;
+			for (var y = 0; y < data.GetLength(1); y++)
+			{
+				for (var x = 0; x < data.GetLength(0); x++)
+				{
+					min = Math.Min(min, data[x, y]);
+					max = Math.Max(max, data[x, y]);
+				}
+			}
+
+			var range = max - min;
+			var terraceHeight = range / (count - 1); // -1 because there's an implicit extra terrace at the end of the range
+
+			for (var y = 0; y < data.GetLength(1); y++)
+			{
+				for (var x = 0; x < data.GetLength(0); x++)
+				{
+					var terraceNumber = (int)((data[x, y] - min) / terraceHeight);
+					data[x, y] = min + (terraceNumber * terraceHeight);
+				}
+			}
+		}
+
 		public static void Normalise(this double[,] data)
 		{
 			var min = double.MaxValue;

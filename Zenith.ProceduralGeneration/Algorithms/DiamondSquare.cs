@@ -2,7 +2,7 @@
  * https://gist.github.com/awilki01/83b65ad852a0ab30192af07cda3d7c0b
  */
 
-namespace heightmap_gen.Algorithms
+namespace Zenith.Algorithms
 {
 	public class DiamondSquare
 	{

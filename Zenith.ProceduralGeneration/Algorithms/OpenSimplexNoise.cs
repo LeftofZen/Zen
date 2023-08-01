@@ -7,7 +7,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace heightmap_gen.Algorithms
+namespace Zenith.Algorithms
 {
 	public class OpenSimplexNoise
 	{

@@ -1,20 +1,13 @@
-﻿using heightmap_gen.Algorithms;
+﻿using Zenith.Algorithms;
 using Zenith.Core;
 
-namespace heightmap_gen.Generators
+namespace Zenith.ProceduralGeneration
 {
-	public record DiamondSquareParams(
-		int Width,
-		int Height,
-		long Seed = 0,
-		double Roughness = 1.0,
-		double? InitialValue = null);
-
 	public static class DiamondSquareGenerator
 	{
 		public static double[,] Generate(DiamondSquareParams dsp)
 		{
-			var rnd = new Random((int)dsp.Seed);
+			var rnd = new Random(dsp.Seed == 0 ? (int)dsp.Seed : new Random().Next());
 			var initialValue = dsp.InitialValue is null or 0 ? rnd.NextDouble() : dsp.InitialValue.Value;
 
 			var maxPoints = Math.Max(dsp.Width, dsp.Height);
