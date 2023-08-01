@@ -1,6 +1,5 @@
 ﻿using Zenith.Colour;
 using Zenith.Maths;
-using Zenith.Maths.Points;
 using Zenith.Core;
 
 namespace Zenith.Drawing

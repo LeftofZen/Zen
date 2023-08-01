@@ -1,5 +1,4 @@
 ﻿using Zenith.Core;
-using Zenith.Maths.Vectors;
 
 namespace Zenith.Colour
 {

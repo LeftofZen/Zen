@@ -1,6 +1,4 @@
 ﻿using System.Numerics;
-using Zenith.Core;
-using Zenith.Maths.Points;
 using Zenith.Maths.Vectors;
 
 namespace Zenith.Maths

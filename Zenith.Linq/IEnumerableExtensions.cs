@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Zenith.Linq
+﻿namespace Zenith.Linq
 {
 	public static class IEnumerableExtensions
 	{
