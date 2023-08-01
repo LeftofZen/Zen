@@ -3,7 +3,20 @@
 	// didn't use records here because records don't bind to propertygrid in winforms :|
 	public class SimplexNoiseParams
 	{
-		public SimplexNoiseParams(int width, int height, long seed, double xOffset, double yOffset, int octaves, double lacunarity, double persistence, double initialAmplitude, double initialFrequency, double redistribution, bool useTerracing, int terraceCount, bool normaliseOutput)
+		public SimplexNoiseParams(
+			int width,
+			int height,
+			long seed = 0,
+			double xOffset = 0,
+			double yOffset = 0,
+			int octaves = 8,
+			double lacunarity = 3.0,
+			double persistence = 0.5,
+			double initialAmplitude = 1.0,
+			double initialFrequency = 0.005,
+			double redistribution = 1.0,
+			int terraceCount = 10,
+			bool normaliseOutput = true)
 		{
 			Width = width;
 			Height = height;
@@ -22,16 +35,16 @@
 
 		public int Width { get; set; }
 		public int Height { get; set; }
-		public long Seed { get; set; } = 0;
-		public double XOffset { get; set; } = 0;
-		public double YOffset { get; set; } = 0;
-		public int Octaves { get; set; } = 8;
-		public double Lacunarity { get; set; } = 3.0;
-		public double Persistence { get; set; } = 0.5;
-		public double InitialAmplitude { get; set; } = 1;
-		public double InitialFrequency { get; set; } = 0.005;
-		public double Redistribution { get; set; } = 1;
-		public int TerraceCount { get; set; } = 10;
-		public bool NormaliseOutput { get; set; } = true;
+		public long Seed { get; set; }
+		public double XOffset { get; set; }
+		public double YOffset { get; set; }
+		public int Octaves { get; set; }
+		public double Lacunarity { get; set; }
+		public double Persistence { get; set; }
+		public double InitialAmplitude { get; set; }
+		public double InitialFrequency { get; set; }
+		public double Redistribution { get; set; }
+		public int TerraceCount { get; set; }
+		public bool NormaliseOutput { get; set; }
 	}
 }

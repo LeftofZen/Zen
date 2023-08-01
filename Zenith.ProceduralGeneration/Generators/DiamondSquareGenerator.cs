@@ -7,7 +7,7 @@ namespace Zenith.ProceduralGeneration
 	{
 		public static double[,] Generate(DiamondSquareParams dsp)
 		{
-			var rnd = new Random(dsp.Seed == 0 ? (int)dsp.Seed : new Random().Next());
+			var rnd = new Random(dsp.Seed == 0 ? new Random().Next() : (int)dsp.Seed);
 			var initialValue = dsp.InitialValue is null or 0 ? rnd.NextDouble() : dsp.InitialValue.Value;
 
 			var maxPoints = Math.Max(dsp.Width, dsp.Height);

@@ -6,7 +6,7 @@ namespace Zenith.ProceduralGeneration
 	{
 		public static double[,] Generate(SimplexNoiseParams snp)
 		{
-			var noise = new OpenSimplexNoise(snp.Seed == 0 ? snp.Seed : new Random().NextInt64());
+			var noise = new OpenSimplexNoise(snp.Seed == 0 ? new Random().NextInt64() : snp.Seed);
 			var data = new double[snp.Width, snp.Height];
 
 			for (var y = 0; y < data.GetLength(1); y++)
