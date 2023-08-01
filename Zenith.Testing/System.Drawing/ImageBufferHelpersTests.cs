@@ -9,7 +9,7 @@ using Zenith.System.Drawing;
 namespace Zenith.Testing.System.Drawing
 {
 	[TestFixture]
-	public class ImageBufferHelperTests
+	public class ImageBufferHelpersTests
 	{
 		[Test]
 		public void TestImageBufferSaveAndLoad()
@@ -33,7 +33,7 @@ namespace Zenith.Testing.System.Drawing
 			});
 		}
 
-		static Random rnd = new Random(1);
+		static Random rnd = new(1);
 
 		public static ImageBuffer GetRandomImageBuffer(int width, int height)
 		{

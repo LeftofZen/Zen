@@ -5,16 +5,23 @@ using Zenith.Core;
 
 namespace Zenith.Drawing
 {
-	public class ImageBuffer
+	public class ImageBuffer : Array2D<ColourRGB>
 	{
-		private ColourRGB[,] buf; // make some Pixel : IVector3<int> class in future?
+		//private ColourRGB[,] buf; // make some Pixel : IVector3<int> class in future?
 		private bool[,] isSet;
 
 #pragma warning disable CS8618 // Bogus error - Clear() method sets buf and isSet
-		public ImageBuffer(int width, int height)
+		public ImageBuffer(int width, int height) : base(width, height)
 #pragma warning restore CS8618 // Bogus error - Clear() method sets buf and isSet
 		{
 			Clear(width, height);
+			Radius = MathsHelpers.Distance.Euclidean(Point2.Zero, Middle);
+		}
+
+		public ImageBuffer(ColourRGB[,] data) : base(data)
+		{
+			isSet = new bool[Width, Height];
+			//isSet.Fill(true);
 			Radius = MathsHelpers.Distance.Euclidean(Point2.Zero, Middle);
 		}
 
@@ -25,7 +32,7 @@ namespace Zenith.Drawing
 
 		private void Clear(int width, int height)
 		{
-			buf = new ColourRGB[width, height];
+			Data = new ColourRGB[width, height];
 			isSet = new bool[width, height];
 		}
 
@@ -39,14 +46,14 @@ namespace Zenith.Drawing
 			=> GetPixel(p.X, p.Y);
 
 		public ColourRGB GetPixel(int X, int Y)
-			=> buf[X, Y];
+			=> Data[X, Y];
 
 		public void SetPixel(Point2 p, ColourRGB c)
 			=> SetPixel(p.X, p.Y, c);
 
 		public void SetPixel(int X, int Y, ColourRGB c)
 		{
-			buf[X, Y] = c;
+			Data[X, Y] = c;
 			isSet[X, Y] = true;
 		}
 
@@ -55,26 +62,6 @@ namespace Zenith.Drawing
 
 		public bool IsEmpty(int X, int Y)
 			=> !isSet[X, Y];
-
-		public void Fill(ColourRGB fillColour)
-			=> buf.Fill(fillColour);
-
-		public void FillRect(int X, int Y, int Width, int Height, ColourRGB c)
-		{
-			for (var y = Y; y < Y + Height; ++y)
-			{
-				for (var x = X; x < X + Width; ++x)
-				{
-					SetPixel(x, y, c);
-				}
-			}
-		}
-
-		public int Width
-			=> buf.GetLength(0);
-
-		public int Height
-			=> buf.GetLength(1);
 
 		public int NumberOfPixels
 			=> Width * Height;

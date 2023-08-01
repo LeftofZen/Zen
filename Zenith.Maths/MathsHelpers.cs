@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Zenith.Core;
 using Zenith.Maths.Points;
 using Zenith.Maths.Vectors;
 
@@ -42,5 +43,21 @@ namespace Zenith.Maths
 
 		public static T Rescale<T>(T val, T min, T max) where T : INumber<T>
 			=> (val * (min - max)) + min;
+
+		public static T Lerp<T, TLerp>(T start, T end, TLerp amount) where T : INumber<T>, IMultiplyOperators<T, TLerp, T> where TLerp : IFloatingPoint<TLerp>
+			=> start + ((end - start) * amount);
+
+		public static TVector Lerp<T, TLerp, TVector>(TVector start, TVector end, TLerp amount)
+			where T : INumber<T>, IMultiplyOperators<T, TLerp, T>
+			where TLerp : IFloatingPoint<TLerp>
+			where TVector : IVector<T>
+		{
+			var outVec = default(TVector);
+			for (var i = 0; i < start.Components.Length; ++i)
+			{
+				outVec!.Components[i] = Lerp(start.Components[i], end.Components[i], amount);
+			}
+			return outVec!;
+		}
 	}
 }

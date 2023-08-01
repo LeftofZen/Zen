@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace Zenith.Core
 {
@@ -112,6 +113,7 @@ namespace Zenith.Core
 				throw new ArgumentOutOfRangeException(paramName, $"{paramName} was not > 0. Actual={argument} Message=\"{message}\"");
 			}
 		}
+
 		public static void Negative(decimal argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null, string? message = null)
 		{
 			if (argument >= 0m)
@@ -126,6 +128,32 @@ namespace Zenith.Core
 			if (sourceLength > length)
 			{
 				throw new ArgumentOutOfRangeException(paramName, $"{sourceLength} exceeds maximum length of {length}. Message=\"{message}\"");
+			}
+		}
+
+		// should be in Zenith.Maths, but then we have Core project depending on Maths, which I don't want
+		public static bool IsEven<T>(T number) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+		{
+			if (typeof(T) == typeof(char) || typeof(T) == typeof(bool))
+				throw new ArgumentException("Unsupported type");
+
+			dynamic value = Convert.ChangeType(number, typeof(long));
+			return value % 2 == 0;
+		}
+
+		public static void Odd<T>(T argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null, string? message = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+		{
+			if (IsEven(argument))
+			{
+				throw new ArgumentOutOfRangeException(paramName, $"{paramName} was not odd. Actual={argument} Message=\"{message}\"");
+			}
+		}
+
+		public static void Even<T>(T argument, [CallerArgumentExpression(nameof(argument))] string? paramName = null, string? message = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+		{
+			if (!IsEven(argument))
+			{
+				throw new ArgumentOutOfRangeException(paramName, $"{paramName} was not even. Actual={argument} Message=\"{message}\"");
 			}
 		}
 	}

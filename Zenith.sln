@@ -23,6 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.System.Drawing", "Ze
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Maths", "Zenith.Maths\Zenith.Maths.csproj", "{68E98E0F-67A0-46E3-90F0-39C7951B6E48}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6B478FB0-0032-4ACF-BB33-2474538EA3C1} = {6B478FB0-0032-4ACF-BB33-2474538EA3C1}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Debug", "Zenith.Debug\Zenith.Debug.csproj", "{472D9E9F-24A2-4070-BFF6-D039B5F042F8}"
 EndProject
@@ -36,6 +39,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Testing", "Zenith.Testing\Zenith.Testing.csproj", "{0CD1022D-1901-474D-A96F-4C4ABA9995A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Drawing", "Zenith.Drawing\Zenith.Drawing.csproj", "{FE26B6E4-A73A-4E62-81DD-13FC19B7525D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Testing.Console", "Zenith.Testing.Console\Zenith.Testing.Console.csproj", "{B571C36F-F89A-44DA-9CE6-7D5D9113C8AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +84,10 @@ Global
 		{FE26B6E4-A73A-4E62-81DD-13FC19B7525D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE26B6E4-A73A-4E62-81DD-13FC19B7525D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE26B6E4-A73A-4E62-81DD-13FC19B7525D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B571C36F-F89A-44DA-9CE6-7D5D9113C8AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B571C36F-F89A-44DA-9CE6-7D5D9113C8AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B571C36F-F89A-44DA-9CE6-7D5D9113C8AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B571C36F-F89A-44DA-9CE6-7D5D9113C8AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
