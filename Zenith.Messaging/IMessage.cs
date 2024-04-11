@@ -59,9 +59,5 @@ namespace Zenith.Messaging
 	[StructLayout(LayoutKind.Sequential, Pack = 1, Size = Constants.MessageHeaderSize)] // MessageHeaderSize must == sizeof(Header)
 	[Serializable]
 	[MessagePackObject(keyAsPropertyName: true)]
-	public struct Header
-	{
-		public uint Type { get; init; }
-		public uint Length { get; set; }
-	}
+	public record struct Header(uint Type, uint Length);
 }

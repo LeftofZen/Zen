@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using Zenith.Maths.Vectors;
+using Zenith.Core;
 
 namespace Zenith.Maths
 {

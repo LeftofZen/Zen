@@ -1,4 +1,4 @@
-﻿namespace Zenith.Maths.Vectors
+﻿namespace Zenith.Core
 {
 	public interface IVector<T>
 	{

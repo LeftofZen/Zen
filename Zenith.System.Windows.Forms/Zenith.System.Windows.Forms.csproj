@@ -13,9 +13,11 @@
   </Target>
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Authors>Benjamin Sutas</Authors>
     <RepositoryUrl>https://github.com/LeftofZen/Zen</RepositoryUrl>
@@ -37,9 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Zenith.Core\Zenith.Core.csproj" />
-    <ProjectReference Include="..\Zenith.Linq\Zenith.Linq.csproj" />
-    <ProjectReference Include="..\Zenith.Maths\Zenith.Maths.csproj" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

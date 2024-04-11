@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Zenith.Maths.Vectors
+namespace Zenith.Core
 {
 	public interface IVector4<T> : IVector<T> where T : INumber<T>, INumberBase<T>
 	{

@@ -1,52 +1,44 @@
 ﻿using Serilog;
+using System.Buffers;
+using System.IO.Pipelines;
 
 namespace Zenith.Messaging
 {
-	public class MessageStreamWriterBase : IDisposable
+	public class MessageStreamWriterBase
 	{
 		public int MaxMsgSize { get; init; }
 
-		private BufferedStream BufferedStream { get; init; }
-
 		public int PendingMessages { get; private set; }
 
-		ILogger? Logger { get; init; }
+		protected ILogger? Logger { get; init; }
 
-		public MessageStreamWriterBase(Stream stream, int maxMsgSize = Constants.DefaultMaxMsgSize, ILogger? logger = null)
+		PipeWriter Writer { get; init; }
+
+		public MessageStreamWriterBase(PipeWriter writer, int maxMsgSize = Constants.DefaultMaxMsgSize, ILogger? logger = null)
 		{
+			Writer = writer;
 			MaxMsgSize = maxMsgSize;
-			BufferedStream = new BufferedStream(stream, MaxMsgSize);
 			Logger = logger;
 		}
 
-		public void Enqueue(uint type, byte[] msg)
+		public async Task Enqueue(uint type, byte[] msg)
 		{
 			Logger?.Debug("[MessageStreamWriterBase::Enqueue] {type}", type);
 
-			var a = BitConverter.GetBytes(type);
-			var b = BitConverter.GetBytes(msg.Length);
-
-			BufferedStream.Write(a);
-			BufferedStream.Write(b);
-			BufferedStream.Write(msg);
-
+			byte[] bytes = [.. BitConverter.GetBytes(type), .. BitConverter.GetBytes(msg.Length), .. msg];
+			_ = await Writer.WriteAsync(bytes);
 			PendingMessages++;
 		}
 
-		public void Update()
+		public async Task Update()
 		{
 			if (PendingMessages > 0)
 			{
 				Logger?.Debug("[MessageStreamWriterBase::Update] {pendingMessages}", PendingMessages);
-				BufferedStream.Flush();
+
+				_ = await Writer.FlushAsync();
 				PendingMessages = 0;
 			}
-		}
-
-		public void Dispose()
-		{
-			BufferedStream.Dispose();
-			GC.SuppressFinalize(this);
 		}
 	}
 }

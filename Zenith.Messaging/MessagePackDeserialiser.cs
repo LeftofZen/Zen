@@ -2,14 +2,10 @@
 
 namespace Zenith.Messaging
 {
-	public class MessagePackDeserialiser<TEnum> : IMessageStreamDeserialiser<IMessage> where TEnum : struct, Enum
+	public class MessagePackDeserialiser<TEnum>(IMessageLookup<TEnum> lookup)
+		: IMessageStreamDeserialiser<IMessage> where TEnum : struct, Enum
 	{
-		// you give deserialiser a message definition in IMessageLookup and it'll automatically convert your
-		// messages to the correct type
-		public MessagePackDeserialiser(IMessageLookup<TEnum> lookup)
-			=> Lookup = lookup;
-
-		public IMessageLookup<TEnum> Lookup { get; }
+		public IMessageLookup<TEnum> Lookup { get; } = lookup;
 
 		public IMessage? Deserialise(Header hdr, byte[] bytes)
 			=> (IMessage?)MessagePackSerializer.Deserialize(Lookup.ToType[hdr.Type], bytes);

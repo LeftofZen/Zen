@@ -42,7 +42,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Drawing", "Zenith.Dr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.Testing.Console", "Zenith.Testing.Console\Zenith.Testing.Console.csproj", "{B571C36F-F89A-44DA-9CE6-7D5D9113C8AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenith.ProceduralGeneration", "Zenith.ProceduralGeneration\Zenith.ProceduralGeneration.csproj", "{244312C5-A77A-4130-9E9F-009A38C50F91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.ProceduralGeneration", "Zenith.ProceduralGeneration\Zenith.ProceduralGeneration.csproj", "{244312C5-A77A-4130-9E9F-009A38C50F91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zenith.System.Windows.Forms", "Zenith.System.Windows.Forms\Zenith.System.Windows.Forms.csproj", "{C158260F-DCA9-42C2-B757-987A2E04063D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +96,10 @@ Global
 		{244312C5-A77A-4130-9E9F-009A38C50F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{244312C5-A77A-4130-9E9F-009A38C50F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{244312C5-A77A-4130-9E9F-009A38C50F91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C158260F-DCA9-42C2-B757-987A2E04063D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C158260F-DCA9-42C2-B757-987A2E04063D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C158260F-DCA9-42C2-B757-987A2E04063D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C158260F-DCA9-42C2-B757-987A2E04063D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

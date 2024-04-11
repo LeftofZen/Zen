@@ -1,24 +1,17 @@
 ﻿using Serilog;
+using System.IO.Pipelines;
 
 namespace Zenith.Messaging
 {
-	public class MessageStreamReader<T> : MessageStreamReaderBase where T : IMessage
+	public class MessageStreamReader<T>(PipeReader reader, IMessageStreamDeserialiser<T> deserialiser, int maxMsgSize = Constants.DefaultMaxMsgSize, ILogger? logger = null)
+		: MessageStreamReaderBase(reader, maxMsgSize) where T : IMessage
 	{
-		private IMessageStreamDeserialiser<T> Deserialiser { get; init; }
-		private ILogger? Logger { get; init; }
-
-		public MessageStreamReader(Stream stream, IMessageStreamDeserialiser<T> deserialiser, int maxMsgSize = Constants.DefaultMaxMsgSize, ILogger? logger = null) : base(stream, maxMsgSize)
-		{
-			Deserialiser = deserialiser;
-			Logger = logger;
-		}
-
 		public bool TryDequeue(out (Header hdr, T? body) msg)
 		{
 			if (DelimitedMessageQueue.TryDequeue(out var outMsg))
 			{
-				msg = (outMsg.hdr, Deserialiser.Deserialise(outMsg.hdr, outMsg.msg));
-				Logger?.Debug("[MessageStreamWriter::TryDequeue] {type}", msg.hdr.Type);
+				msg = (outMsg.hdr, deserialiser.Deserialise(outMsg.hdr, outMsg.msg));
+				logger?.Debug("[MessageStreamWriter::TryDequeue] {type}", msg.hdr.Type);
 				return true;
 			}
 

@@ -11,7 +11,7 @@ var extension = ".png";
 var img = new Bitmap(Path.Combine(basePath, filename + extension));
 var imgBuf = ImageBufferHelpers.FromBitmap(img);
 
-//imgBuf.Convolve(Kernels.Identity, EdgeHandling.Crop);C7Mkw8!w!D2nnbM
+//imgBuf.Convolve(Kernels.Identity, EdgeHandling.Crop);
 
 var newBuf = imgBuf.Convolve(Kernels.UnsharpMask, EdgeHandling.Skip);
 

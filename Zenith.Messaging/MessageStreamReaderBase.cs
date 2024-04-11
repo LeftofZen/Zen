@@ -1,88 +1,46 @@
 ﻿using Serilog;
+using System.Buffers;
+using System.IO.Pipelines;
 
 namespace Zenith.Messaging
 {
-	public class MessageStreamReaderBase : IDisposable
+	public class MessageStreamReaderBase
 	{
-		private BufferedStream BufferedStream { get; init; }
-
-		private readonly byte[] cbuf;
-		private int ptrStart;
-		private int ptrEnd; // exclusive
+		PipeReader Reader { get; init; }
 
 		public int MaxMsgSize { get; init; }
 		public Queue<(Header hdr, byte[] msg)> DelimitedMessageQueue { get; init; } = new();
+		public const int HeaderSize = 8;
+		protected ILogger? Logger { get; init; }
 
-		private int DataAvailable => ptrEnd - ptrStart;
-
-		ILogger? Logger { get; init; }
-
-		public MessageStreamReaderBase(Stream stream, int maxMsgSize = Constants.DefaultMaxMsgSize, ILogger? logger = null)
+		public MessageStreamReaderBase(PipeReader reader, int maxMsgSize = Constants.DefaultMaxMsgSize, ILogger? logger = null)
 		{
+			Reader = reader;
 			MaxMsgSize = maxMsgSize;
-			BufferedStream = new BufferedStream(stream, MaxMsgSize);
-			cbuf = new byte[MaxMsgSize];
 			Logger = logger;
 		}
 
-		public void Update()
+		public async Task Update()
 		{
-			try
+			var result = await Reader.ReadAsync();
+			var buffer = result.Buffer;
+
+			if (buffer.Length >= HeaderSize)
 			{
-				UpdateInternal();
-			}
-			catch (Exception ex)
-			{
-				Logger?.Error(ex, "Couldn't read from stream");
-			}
-		}
+				var type = BitConverter.ToUInt32(buffer.Slice(0, 4).FirstSpan);
+				var length = BitConverter.ToUInt32(buffer.Slice(0 + 4, 4).FirstSpan);
 
-		private void UpdateInternal()
-		{
-			// read from stream
-			ptrEnd += BufferedStream.Read(cbuf, ptrEnd, Math.Min(cbuf.Length - ptrEnd, 256));
-
-			// this allocates for every message - easy future performance optmisation is using pools
-			var rom = new ReadOnlyMemory<byte>(cbuf);
-
-			// process buffer into as many messages as possible
-			while (DataAvailable >= Constants.MessageHeaderSize)
-			{
-				// read header
-				var type = BitConverter.ToUInt32(rom.Slice(ptrStart, 4).Span);
-				var length = BitConverter.ToUInt32(rom.Slice(ptrStart + 4, 4).Span);
-
-				if (DataAvailable >= Constants.MessageHeaderSize + length)
+				if (buffer.Length >= HeaderSize + length)
 				{
-					var offset = ptrStart + Constants.MessageHeaderSize;
-					var msgBytes = rom.Slice(offset, (int)length);
+					// we have a full message
+					var msgBytes = buffer.Slice(HeaderSize, (int)length);
 
 					// external deserialisation
 					var hdr = new Header() { Type = type, Length = length };
 					DelimitedMessageQueue.Enqueue((hdr, msgBytes.ToArray()));
-
-					ptrStart += Constants.MessageHeaderSize + (int)length;
-
-					Logger?.Debug("Read {bytes} bytes starting from {start}. MessageType={type} MessageLength={length}", msgBytes.Length, offset, type, length);
 				}
 			}
-
-			// copy any remaining data back to start of buffer
-			if (DataAvailable > 0)
-			{
-				Array.ConstrainedCopy(cbuf, ptrStart, cbuf, 0, DataAvailable);
-				ptrStart = 0;
-				ptrEnd = DataAvailable; // aka 0 + available
-
-				// we should zero out the rest of the buffer if we care about security more than performance
-				// (or just use double buffering and zero it out in another thread/task)
-			}
 		}
 
-		public void Dispose()
-		{
-			BufferedStream.Dispose();
-			GC.SuppressFinalize(this);
-		}
 	}
 }

@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
 using Zenith.Core;
-using Zenith.Maths.Vectors;
 
 namespace Zenith.Colour
 {

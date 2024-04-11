@@ -1,6 +1,4 @@
-﻿using Zenith.Maths.Vectors;
-
-namespace Zenith.Maths
+﻿namespace Zenith.Core
 {
 	public record Point2 : IVector2<int>
 	{
