@@ -12,20 +12,20 @@ namespace Zenith.Testing.Colour
 			Assert.Multiple(() =>
 			{
 				var aquamarine = ColourSpaceConverter.RGBtoHSB(new ColourRGB { R = 0.5f, G = 1f, B = 1f });
-				Assert.AreEqual(new ColourHSB { Hue = 0.5f, Saturation = 0.5f, Brightness = 1f }, aquamarine);
+				Assert.That(new ColourHSB { Hue = 0.5f, Saturation = 0.5f, Brightness = 1f }, Is.EqualTo(aquamarine));
 
 				var white = ColourSpaceConverter.RGBtoHSB(new ColourRGB { R = 1f, G = 1f, B = 1f });
-				Assert.AreEqual(new ColourHSB { Hue = 0f, Saturation = 0f, Brightness = 1f }, white);
+				Assert.That(new ColourHSB { Hue = 0f, Saturation = 0f, Brightness = 1f }, Is.EqualTo(white));
 
 				var black = ColourSpaceConverter.RGBtoHSB(new ColourRGB { R = 0f, G = 0f, B = 0f });
-				Assert.AreEqual(new ColourHSB { Hue = 0f, Saturation = 0f, Brightness = 0f }, black);
+				Assert.That(new ColourHSB { Hue = 0f, Saturation = 0f, Brightness = 0f }, Is.EqualTo(black));
 
 				// H and S can be anything in grayscale, only B affects RGB
 				var greyish = ColourSpaceConverter.RGBtoHSB(new ColourRGB { R = 123 / 255f, G = 123 / 255f, B = 123 / 255f });
-				Assert.AreEqual(0.48235294f, greyish.Brightness);
+				Assert.That(0.48235294f, Is.EqualTo(greyish.Brightness));
 
 				var darkMagenta = ColourSpaceConverter.RGBtoHSB(new ColourRGB { R = 138 / 255f, G = 21 / 255f, B = 170 / 255f });
-				Assert.AreEqual(new ColourHSB { Hue = 0.7975392f, Saturation = 0.87647057f, Brightness = 0.6666667f }, darkMagenta);
+				Assert.That(new ColourHSB { Hue = 0.7975392f, Saturation = 0.87647057f, Brightness = 0.6666667f }, Is.EqualTo(darkMagenta));
 			});
 		}
 
@@ -35,16 +35,16 @@ namespace Zenith.Testing.Colour
 			Assert.Multiple(() =>
 			{
 				var aquamarine = ColourSpaceConverter.HSBtoRGB(new ColourHSB { Hue = 0.5f, Saturation = 0.5f, Brightness = 1f });
-				Assert.AreEqual(new ColourRGB { R = 0.5f, G = 1f, B = 1f }, aquamarine);
+				Assert.That(new ColourRGB { R = 0.5f, G = 1f, B = 1f }, Is.EqualTo(aquamarine));
 
 				var white = ColourSpaceConverter.HSBtoRGB(new ColourHSB { Hue = 0f, Saturation = 0f, Brightness = 1f });
-				Assert.AreEqual(new ColourRGB { R = 1f, G = 1f, B = 1f }, white);
+				Assert.That(new ColourRGB { R = 1f, G = 1f, B = 1f }, Is.EqualTo(white));
 
 				var black = ColourSpaceConverter.HSBtoRGB(new ColourHSB { Hue = 0f, Saturation = 0f, Brightness = 0f });
-				Assert.AreEqual(new ColourRGB { R = 0f, G = 0f, B = 0f }, black);
+				Assert.That(new ColourRGB { R = 0f, G = 0f, B = 0f }, Is.EqualTo(black));
 
 				var greyish = ColourSpaceConverter.HSBtoRGB(new ColourHSB { Hue = 0f, Saturation = 0f, Brightness = 0.48235294f });
-				Assert.AreEqual(new ColourRGB { R = 123 / 255f, G = 123 / 255f, B = 123 / 255f }, greyish);
+				Assert.That(new ColourRGB { R = 123 / 255f, G = 123 / 255f, B = 123 / 255f }, Is.EqualTo(greyish));
 			});
 		}
 

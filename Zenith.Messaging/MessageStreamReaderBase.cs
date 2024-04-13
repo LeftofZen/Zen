@@ -20,9 +20,23 @@ namespace Zenith.Messaging
 			Logger = logger;
 		}
 
-		public async Task Update()
+		public void Update()
 		{
-			var result = await Reader.ReadAsync();
+			while (TryReadSingleMessage()) ;
+		}
+
+		/// <summary>
+		/// Tries to read a single message from the pipe
+		/// </summary>
+		/// <returns>True is a message was successfully read</returns>
+		public bool TryReadSingleMessage()
+		{
+			var hasData = Reader.TryRead(out var result);
+			if (!hasData || result.Buffer.Length <= 0 || result.IsCompleted || result.IsCanceled)
+			{
+				return false;
+			}
+
 			var buffer = result.Buffer;
 
 			if (buffer.Length >= HeaderSize)
@@ -38,9 +52,14 @@ namespace Zenith.Messaging
 					// external deserialisation
 					var hdr = new Header() { Type = type, Length = length };
 					DelimitedMessageQueue.Enqueue((hdr, msgBytes.ToArray()));
+
+					// advance read position
+					Reader.AdvanceTo(buffer.GetPosition(4 + 4 + length));
+					return true;
 				}
 			}
-		}
 
+			return false;
+		}
 	}
 }

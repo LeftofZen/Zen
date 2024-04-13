@@ -25,7 +25,7 @@ namespace Zenith.Testing.System.Drawing
 				{
 					for (var x = 0; x < width; ++x)
 					{
-						Assert.AreEqual(buf.GetPixel(x, y).AsPixel(), newBuf.GetPixel(x, y).AsPixel(), $"[{x}, {y}]");
+						Assert.That(buf.GetPixel(x, y).AsPixel(), Is.EqualTo(newBuf.GetPixel(x, y).AsPixel()), $"[{x}, {y}]");
 					}
 				}
 			});

@@ -63,7 +63,7 @@ namespace Zenith.Colour
 			if (pixelCount == 0)
 			{
 				Console.WriteLine("no pixels");
-				return new HashSet<T>();
+				return [];
 			}
 
 			var colours = new HashSet<T>(pixelCount);

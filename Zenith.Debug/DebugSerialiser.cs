@@ -24,7 +24,7 @@ namespace Zenith.Debug
 
 			var type = obj.GetType();
 
-			// if object has overriden ToString(), lets use that instead
+			// if object has overridden ToString(), lets use that instead
 			var methods = type.GetMethods();
 			var method = Array.Find(methods, m => m.Name.Contains("ToString"));
 			if (method?.DeclaringType != typeof(object))

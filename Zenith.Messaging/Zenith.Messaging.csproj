@@ -38,12 +38,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MessagePack" Version="2.5.124" />
-    <PackageReference Include="MessagePackAnalyzer" Version="2.5.124">
+    <PackageReference Include="MessagePack" Version="2.5.140" />
+    <PackageReference Include="MessagePackAnalyzer" Version="2.5.140">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Serilog" Version="3.0.1" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="System.IO.Pipelines" Version="8.0.0" />
   </ItemGroup>
 

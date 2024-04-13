@@ -147,6 +147,8 @@ dotnet_code_quality_unused_parameters = non_public:suggestion
 
 # CS8500: This takes the address of, gets the size of, or declares a pointer to a managed type
 dotnet_diagnostic.CS8500.severity = none
+csharp_style_prefer_primary_constructors = true:suggestion
+dotnet_diagnostic.SYSLIB1090.severity = none
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
 tab_width = 4
@@ -167,3 +169,7 @@ dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
+dotnet_style_prefer_collection_expression = when_types_loosely_match:suggestion
+dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
+dotnet_style_predefined_type_for_member_access = true:suggestion
+dotnet_diagnostic.WFAC010.severity = none

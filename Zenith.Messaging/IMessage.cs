@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿global using MessageToTypeLookup = System.Collections.Generic.IDictionary<uint, System.Type>;
+global using MessageToNetworkLookup = System.Collections.Generic.IDictionary<System.Type, uint>;
+using System.Runtime.InteropServices;
 using MessagePack;
 
 namespace Zenith.Messaging
@@ -12,21 +14,53 @@ namespace Zenith.Messaging
 	// type is 4 bytes, representing the body message type, which is user defined
 	// length is the length of the body only (not including header) in bytes
 
+	public interface IMessageLookup
+	{
+		public MessageToTypeLookup ToType { get; }
+
+		public MessageToNetworkLookup ToNetwork { get; }
+	}
+
 	public interface IMessageLookup<T> where T : struct, Enum
 	{
-		public IDictionary<uint, Type> ToType { get; }
+		public IDictionary<T, Type> ToType { get; }
 
 		public IDictionary<Type, T> ToNetwork { get; }
 	}
 
-	public class MessageLookupBase<T> : IMessageLookup<T> where T : struct, Enum
+	public class MessageLookupBase(MessageToTypeLookup toType, MessageToNetworkLookup toNetwork) : IMessageLookup
 	{
-		public unsafe uint GetUnderlyingValue(T value)
+		public MessageToTypeLookup ToType { get; init; } = toType.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+		public MessageToNetworkLookup ToNetwork { get; init; } = toNetwork;
+	}
+
+	public static class EnumHelpers
+	{
+		public static unsafe uint GetUnderlyingValueAsUint<T>(T value) where T : struct, Enum
 		{
 			var tr = __makeref(value);
 			var ptr = **(IntPtr**)&tr;
 			return (uint)*(int*)ptr;
 		}
+
+		public static unsafe T GetEnumValueFromUint<T>(uint value) where T : struct, Enum
+			=> *(T*)&value; // Directly map the uint to a pointer of the enum type
+	}
+
+	public class MessageLookupBase<T> : IMessageLookup<T> where T : struct, Enum
+	{
+		//public MessageLookupBase(IDictionary<uint, Type> toType, IDictionary<Type, T> toNetwork)
+		//{
+		//	var underlyingType = Enum.GetUnderlyingType(typeof(T));
+		//	if (underlyingType != typeof(int) && underlyingType != typeof(uint))
+		//	{
+		//		throw new ArgumentException("Message type enum didn't have underlying type of int or uint", nameof(toType));
+		//	}
+
+		//	ToType = toType.ToDictionary(kvp => EnumHelpers.GetUnderlyingValueAsUint<T>(kvp.Key), kvp => kvp.Value);
+		//	ToNetwork = toNetwork;
+		//}
 
 		public MessageLookupBase(IDictionary<T, Type> toType, IDictionary<Type, T> toNetwork)
 		{
@@ -36,11 +70,11 @@ namespace Zenith.Messaging
 				throw new ArgumentException("Message type enum didn't have underlying type of int or uint", nameof(toType));
 			}
 
-			ToType = toType.ToDictionary(kvp => GetUnderlyingValue(kvp.Key), kvp => kvp.Value);
+			ToType = toType.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 			ToNetwork = toNetwork;
 		}
 
-		public IDictionary<uint, Type> ToType { get; init; }
+		public IDictionary<T, Type> ToType { get; init; }
 
 		public IDictionary<Type, T> ToNetwork { get; init; }
 	}

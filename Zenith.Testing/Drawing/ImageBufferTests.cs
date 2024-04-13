@@ -15,7 +15,7 @@ namespace Zenith.Testing.Drawing
 			{
 				for (var y = 0; y < buf.Height; ++y)
 				{
-					Assert.True(buf.IsEmpty(x, y));
+					Assert.That(buf.IsEmpty(x, y), Is.True);
 				}
 			}
 		}

@@ -15,12 +15,12 @@ namespace Zenith.Testing.Linq
 			// assumes the seed of `rnd` in IListExtensions is 1
 			Assert.Multiple(() =>
 			{
-				Assert.AreEqual(2, input[0]);
-				Assert.AreEqual(1, input[1]);
-				Assert.AreEqual(4, input[2]);
-				Assert.AreEqual(6, input[3]);
-				Assert.AreEqual(3, input[4]);
-				Assert.AreEqual(5, input[5]);
+				Assert.That(2, Is.EqualTo(input[0]));
+				Assert.That(1, Is.EqualTo(input[1]));
+				Assert.That(4, Is.EqualTo(input[2]));
+				Assert.That(6, Is.EqualTo(input[3]));
+				Assert.That(3, Is.EqualTo(input[4]));
+				Assert.That(5, Is.EqualTo(input[5]));
 			});
 		}
 	}

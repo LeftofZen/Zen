@@ -21,30 +21,30 @@ namespace Zenith.Testing.Drawing
 
 			Assert.Multiple(() =>
 			{
-				Assert.AreEqual(ColourRGB.Black, buf[0, 0]);
-				Assert.AreEqual(ColourRGB.Magenta, buf[1, 0]);
-				Assert.AreEqual(ColourRGB.Yellow, buf[2, 0]);
-				Assert.AreEqual(ColourRGB.Cyan, buf[0, 1]);
-				Assert.AreEqual(ColourRGB.Red, buf[1, 1]);
-				Assert.AreEqual(ColourRGB.Red, buf[2, 1]);
-				Assert.AreEqual(ColourRGB.Green, buf[0, 2]);
-				Assert.AreEqual(ColourRGB.White, buf[1, 2]);
-				Assert.AreEqual(ColourRGB.Blue, buf[2, 2]);
+				Assert.That(ColourRGB.Black, Is.EqualTo(buf[0, 0]));
+				Assert.That(ColourRGB.Magenta, Is.EqualTo(buf[1, 0]));
+				Assert.That(ColourRGB.Yellow, Is.EqualTo(buf[2, 0]));
+				Assert.That(ColourRGB.Cyan, Is.EqualTo(buf[0, 1]));
+				Assert.That(ColourRGB.Red, Is.EqualTo(buf[1, 1]));
+				Assert.That(ColourRGB.Red, Is.EqualTo(buf[2, 1]));
+				Assert.That(ColourRGB.Green, Is.EqualTo(buf[0, 2]));
+				Assert.That(ColourRGB.White, Is.EqualTo(buf[1, 2]));
+				Assert.That(ColourRGB.Blue, Is.EqualTo(buf[2, 2]));
 			});
 
 			buf.Convolve(Kernels.Identity, EdgeHandling.Crop);
 
 			Assert.Multiple(() =>
 			{
-				Assert.AreEqual(ColourRGB.Black, buf[0, 0]);
-				Assert.AreEqual(ColourRGB.Magenta, buf[1, 0]);
-				Assert.AreEqual(ColourRGB.Yellow, buf[2, 0]);
-				Assert.AreEqual(ColourRGB.Cyan, buf[0, 1]);
-				Assert.AreEqual(ColourRGB.Red, buf[1, 1]);
-				Assert.AreEqual(ColourRGB.Red, buf[2, 1]);
-				Assert.AreEqual(ColourRGB.Green, buf[0, 2]);
-				Assert.AreEqual(ColourRGB.White, buf[1, 2]);
-				Assert.AreEqual(ColourRGB.Blue, buf[2, 2]);
+				Assert.That(ColourRGB.Black, Is.EqualTo(buf[0, 0]));
+				Assert.That(ColourRGB.Magenta, Is.EqualTo(buf[1, 0]));
+				Assert.That(ColourRGB.Yellow, Is.EqualTo(buf[2, 0]));
+				Assert.That(ColourRGB.Cyan, Is.EqualTo(buf[0, 1]));
+				Assert.That(ColourRGB.Red, Is.EqualTo(buf[1, 1]));
+				Assert.That(ColourRGB.Red, Is.EqualTo(buf[2, 1]));
+				Assert.That(ColourRGB.Green, Is.EqualTo(buf[0, 2]));
+				Assert.That(ColourRGB.White, Is.EqualTo(buf[1, 2]));
+				Assert.That(ColourRGB.Blue, Is.EqualTo(buf[2, 2]));
 			});
 		}
 	}

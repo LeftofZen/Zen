@@ -19,13 +19,13 @@ namespace Zenith.Testing.Colour
 			var result = ColourEqualiser.Equalise(colours);
 
 			// assert
-			Assert.AreEqual(0f, result.Min(c => c.R));
-			Assert.AreEqual(0f, result.Min(c => c.G));
-			Assert.AreEqual(0f, result.Min(c => c.B));
+			Assert.That(0f, Is.EqualTo(result.Min(c => c.R)));
+			Assert.That(0f, Is.EqualTo(result.Min(c => c.G)));
+			Assert.That(0f, Is.EqualTo(result.Min(c => c.B)));
 
-			Assert.AreEqual(1f, result.Max(c => c.R));
-			Assert.AreEqual(1f, result.Max(c => c.G));
-			Assert.AreEqual(1f, result.Max(c => c.B));
+			Assert.That(1f, Is.EqualTo(result.Max(c => c.R)));
+			Assert.That(1f, Is.EqualTo(result.Max(c => c.G)));
+			Assert.That(1f, Is.EqualTo(result.Max(c => c.B)));
 		}
 	}
 }

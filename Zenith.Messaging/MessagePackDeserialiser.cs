@@ -8,6 +8,6 @@ namespace Zenith.Messaging
 		public IMessageLookup<TEnum> Lookup { get; } = lookup;
 
 		public IMessage? Deserialise(Header hdr, byte[] bytes)
-			=> (IMessage?)MessagePackSerializer.Deserialize(Lookup.ToType[hdr.Type], bytes);
+			=> (IMessage?)MessagePackSerializer.Deserialize(Lookup.ToType[EnumHelpers.GetEnumValueFromUint<TEnum>(hdr.Type)], bytes);
 	}
 }

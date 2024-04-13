@@ -1,5 +1,4 @@
 ﻿using Serilog;
-using System.Buffers;
 using System.IO.Pipelines;
 
 namespace Zenith.Messaging
